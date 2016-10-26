@@ -3,8 +3,7 @@ PDB web components
 
 _in development_
 
-A standard web component implementation of InterPro components
-([PDB Component Library](http://www.ebi.ac.uk/pdbe/pdb-component-library/index.html))
+A standard web component implementation of InterPro components.
 
 Note: As the InterPro API is not released yet, the
 `interpro-data-loader` component is not functional. In the meantime,

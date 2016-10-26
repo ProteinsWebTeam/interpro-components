@@ -1,20 +1,18 @@
 {
   "name": "interpro-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "InterPro components using standard Web Components",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "module": "src/components/index.js",
   "jsnext:main": "src/components/index.js",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aurel-l/data-loader.git"
+    "url": "https://github.com/ProteinsWebTeam/interpro-components.git"
   },
   "license": "Apache-2.0",
   "author": "Aurélien Luciani <luciani@ebi.ac.uk> (https://github.com/aurel-l)",
+  "keywords": ["webcomponents", "customelements", "shadowdom", "interpro", "ebi"],
   "scripts": {
     "lint": "eslint --ignore-path .gitignore \"./**/*.js\"",
     "bundle": "rollup -c",
