@@ -1,5 +1,5 @@
-PDB web components
-==================
+InterPro web components
+=======================
 
 _in development_
 
