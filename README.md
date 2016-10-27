@@ -3,7 +3,7 @@ InterPro web components
 
 _in development_
 
-A standard web component implementation of InterPro components.
+A standard web component (v1) implementation of InterPro components.
 
 Note: As the InterPro API is not released yet, the
 `interpro-data-loader` component is not functional. In the meantime,
@@ -56,10 +56,9 @@ This element assumes support for at least ES2016.
 To support older browsers you might need to transpile the code you use
 down to the version you are planning on supporting.
 
-You might need to use a polyfill for browser not supporting Custom
-Elements.
-[webcomponents.js](https://github.com/webcomponents/webcomponentsjs) is
-recommended.
+You might need to use a polyfill for browsers not supporting Custom
+Elements and ShadowDOM v1
+See [webcomponents.js](https://github.com/webcomponents/webcomponentsjs).
 
 ## List of components included
 

@@ -1,8 +1,11 @@
 {
   "name": "interpro-components",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "InterPro components using standard Web Components",
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "module": "src/components/index.js",
   "jsnext:main": "src/components/index.js",
   "main": "dist/index.js",
@@ -12,7 +15,13 @@
   },
   "license": "Apache-2.0",
   "author": "Aurélien Luciani <luciani@ebi.ac.uk> (https://github.com/aurel-l)",
-  "keywords": ["webcomponents", "customelements", "shadowdom", "interpro", "ebi"],
+  "keywords": [
+    "webcomponents",
+    "customelements",
+    "shadowdom",
+    "interpro",
+    "ebi"
+  ],
   "scripts": {
     "lint": "eslint --ignore-path .gitignore \"./**/*.js\"",
     "bundle": "rollup -c",
@@ -27,7 +36,7 @@
     "babel-preset-es2017": "^6.16.0",
     "babel-preset-stage-3": "^6.17.0",
     "eslint": "^3.8.1",
-    "eslint-config-standard": "^6.2.0",
+    "eslint-config-standard": "^6.2.1",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
@@ -40,6 +49,6 @@
     "rollup-watch": "^2.5.0"
   },
   "dependencies": {
-    "data-loader": "^0.1.4"
+    "data-loader": "^0.1.6"
   }
 }

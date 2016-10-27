@@ -1,5 +1,5 @@
-import InterproType from './components/interpro-type';
-// import InterproDataLoader from './components/interpro-data-loader';
+import {InterproType} from './components';
 
-customElements.define('interpro-type', InterproType);
-// customElements.define('interpro-data-loader', InterproDataLoader);
+if (window.customElements) {
+  customElements.define('interpro-type', InterproType);
+}
