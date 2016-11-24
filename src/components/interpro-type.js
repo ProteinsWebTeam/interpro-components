@@ -10,42 +10,6 @@ const supportedTypes = new Map([
   ['undefined', {full: 'Undefined', small: 'U', color: '#D3C5BC'}],
 ]);
 
-const undef = supportedTypes.get('undefined');
-
-const template = document.createElement('template');
-template.innerHTML = `
-  <style>
-    span {
-      display: inline-block;
-    }
-    #root {
-      font-family: "Helvetica Neue", Verdana, sans-serif;
-      margin: 0.1rem;
-      user-select: none;
-      color: ${undef.color};
-    }
-    #small {
-      margin: 0.1rem;
-      padding: 0.2rem 0.4rem;
-      border: 1px gray solid;
-      border-radius: 0.2rem;
-      background: currentColor;
-    }
-    #small > span {
-      color: white;
-    }
-    #full {
-      background: none;
-    }
-  </style>
-  <span id="root">
-    <span id="small">
-      <span>${undef.small}</span>
-    </span>
-    <span id="full">${undef.full}</span>
-  </span>
-`.trim();
-
 class InterproType extends HTMLElement {
   static get observedAttributes () {
     return ['type', 'expanded'];
@@ -63,15 +27,43 @@ class InterproType extends HTMLElement {
     // If first render
     if (!this.shadowRoot) {
       this.attachShadow({mode: 'open'});
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
     }
-    this.shadowRoot.getElementById('small').firstElementChild.textContent = (
-      this._type.small
-    );
-    const full = this.shadowRoot.getElementById('full');
-    full.textContent = this._type.full;
-    full.style.display = this.expanded ? '' : 'none';
-    this.shadowRoot.getElementById('root').style.color = this._type.color;
+    (this.shadyRoot || this.shadowRoot).innerHTML = `
+      <span class="root"
+        style="
+          display: inline-block;
+          font-family: 'Helvetica Neue', Verdana, sans-serif;
+          margin: 0.1rem;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        "
+      >
+        <span class="small"
+          style="
+            display: inline-block;
+            margin: 0.1rem;
+            padding: 0.2rem 0.4rem;
+            border: 1px gray solid;
+            border-radius: 0.2rem;
+            background: ${this._type.color};
+            color: white;
+          "
+        >
+          ${this._type.small}
+        </span>
+        ${
+          this.expanded ? `
+            <span class="full"
+              style="background: none; color: ${this._type.color};"
+            >
+              ${this._type.full}
+            </span>
+          ` : ''
+        }
+      </span>
+    `.trim();
   }
 
   _planRender () {
@@ -121,8 +113,11 @@ class InterproType extends HTMLElement {
   constructor () {
     super();
     // set defaults
-    this._type = undef;
+    this._type = supportedTypes.get('undefined');
     this._expanded = false;
+    this._handleLoadEvent = this._handleLoadEvent.bind(this);
+    this._render = this._render.bind(this);
+    this._planRender = this._planRender.bind(this);
   }
 
   connectedCallback () {

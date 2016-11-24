@@ -3,8 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Test web components</title>
-  <script async defer src="/node_modules/data-loader/dist/index.js"></script>
-  <script async defer src="/dist/index.js"></script>
+  <script defer>
+    loadScript = url => new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.onload = res;
+      s.onerror = rej;
+      s.src = url;
+      document.head.appendChild(s);
+    });
+    supportsCustomElements = () => new Promise((res, rej) => {
+      if (window.customElements) {
+        res();
+      } else {
+        rej();
+      }
+    });
+  </script>
+  <script defer>
+    loadScript(`//${location.hostname}:35729/livereload.js?snipver=1`);
+  </script>
+  <script defer>
+    supportsCustomElements()
+      // if doesn't support, add polyfill
+      .catch(() => loadScript(
+        '/node_modules/skatejs-web-components/dist/index-with-deps.js'
+      ))
+      .then(() => loadScript('/node_modules/data-loader/dist/index.js'))
+      .then(() => loadScript('/dist/index.js'));
+  </script>
 </head>
 <body>
   <div>
@@ -36,7 +62,7 @@
     <interpro-type>
       <data-loader>
         <source
-            src="http://ves-ebi-ac.ebi.ac.uk/interpro/api/entry/interpro/IPR011528"
+            src="http://wwwdev.ebi.ac.uk/interpro7/api/entry/interpro/IPR011528"
         >
       </data-loader>
     </interpro-type>
@@ -46,7 +72,7 @@
     <interpro-type expanded>
       <data-loader>
         <source
-            src="http://ves-ebi-ac.ebi.ac.uk/interpro/api/entry/interpro/IPR011528"
+            src="http://wwwdev.ebi.ac.uk/interpro7/api/entry/interpro/IPR011528"
         >
       </data-loader>
     </interpro-type>
