@@ -83,6 +83,14 @@ tree.
 Visual representation can be modified from the public API of the
 component (see after)
 
+### `interpro-entry`
+
+Visible element. Only displays data.
+
+Generates a one line visual representation of an entry (_type_ _name_ (_accession_)).
+
+It supports nested entries, displaying them as a subtree. 
+
 ## API
 
 ### `interpro-data-loader`
@@ -111,6 +119,26 @@ none
 |----|-------------|---------------|-----------|-------------|--------|
 |`type`|`'undefined'`|any of 'family', 'domain', 'repeat', 'site', 'active site', 'binding site', 'conserved site', 'ptm', or 'undefined'|corresponds to an entry type|yes|yes|
 |`expanded`|`false`|boolean|expanded view of the component|yes|yes|
+
+#### Events
+
+none
+
+#### CSS custom properties
+
+none
+
+### `interpro-entry`
+
+#### Properties
+
+|name|default value|accepted values|information|DOM attribute|writable|
+|----|-------------|---------------|-----------|-------------|--------|
+|`accession`|`null`|valid entry ID|string corresponding to an existing entry ID|yes|yes|
+|`name`|`''`|valid entry ID|string corresponding to an existing entry ID|yes|yes|
+|`href`|`''`|valid URL|string corresponding the URL of the entry|yes|yes|
+|`type`|`'undefined'`|any of 'family', 'domain', 'repeat', 'site', 'active site', 'binding site', 'conserved site', 'ptm', or 'undefined'|corresponds to an entry type|yes|yes|
+|`selected`|`false`|boolean|To show that is the current entry, and avoid links into the same page.|yes|yes|
 
 #### Events
 

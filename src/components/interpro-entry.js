@@ -2,7 +2,7 @@ class InterproEntry extends HTMLElement {
   static get observedAttributes () {
     return [
       'accession', 'name', 'type', 'level', 'selected',
-      'hasfather', 'haschildren', 'state'
+      'haschildren', 'state', 'href'
     ];
   }
 
@@ -49,7 +49,6 @@ class InterproEntry extends HTMLElement {
     if (this.children.length > 0) this.setAttribute('haschildren', 'haschildren');
     for (const child of this.children) {
       child.setAttribute('level', this._level + 1);
-      child.setAttribute('hasfather', '');
     }
     const shadowDom = this.shadyRoot || this.shadowRoot;
     shadowDom.innerHTML = `
@@ -144,7 +143,9 @@ class InterproEntry extends HTMLElement {
                 font-family: 'Helvetica Neue', Verdana, sans-serif;
                 font-weight: ${this._selected ? 'bold' : 'normal'}
           ">
-              <a class="${this._selected ? '' : 'link'}" >${this._name}</a> (${this._accession})
+              <a class="${this._selected ? '' : 'link'}" ${this._href ? 'href="' + this._href + '"' : ''}>
+                   ${this._name}
+               </a> (${this._accession})
            </span>
           
             <div 
@@ -218,13 +219,6 @@ class InterproEntry extends HTMLElement {
   set selected (value) {
     this._selected = value !== null;
   }
-  get hasfather () {
-    return this._hasfather;
-  }
-
-  set hasfather (value) {
-    this._hasfather = value !== null;
-  }
   get haschildren () {
     return this._haschildren;
   }
@@ -239,14 +233,21 @@ class InterproEntry extends HTMLElement {
   set state (value) {
     this._state = value;
   }
+  get href () {
+    return this._href;
+  }
+
+  set href (value) {
+    this._href = value;
+  }
 
   // Custom element reactions
   constructor () {
     super();
     // set defaults
     this._type = 'undefined';
-    this._accession = 'undefined';
-    this._name = 'undefined';
+    this._accession = '';
+    this._name = '';
     this._level = 0;
     this._state = 'expanded';
     this._handleLoadEvent = this._handleLoadEvent.bind(this);
