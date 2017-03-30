@@ -1,7 +1,7 @@
 InterPro web components
 =======================
 
-_in development_
+:warning:️ _in development_
 
 A standard web component (v1) implementation of InterPro components.
 
@@ -119,3 +119,20 @@ none
 #### CSS custom properties
 
 none
+
+## Development and testing
+
+1. Get the code via git clone:
+
+   ```$ git clone https://github.com/ProteinsWebTeam/interpro-components.git```
+2. Install dependencies via npm:
+
+   ```interpro-components$ npm install```
+3. Start the app. This includes re-bundling, and starts live-reload, so it refresh the page when the code changes.
+
+   ```interpro-components$ npm run start```
+4. Serve the folder. You can use a local install of apache or nginx, or alternatively just serve the local folder with a tool such as [http-server](https://www.npmjs.com/package/http-server)
+
+   ```interpro-components$ http-server```
+
+5. Check the test page in your server. e.g. http://localhost:8080/test/
