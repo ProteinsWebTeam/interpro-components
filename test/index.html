@@ -29,53 +29,94 @@
         '/node_modules/skatejs-web-components/dist/index-with-deps.js'
       ))
       .then(() => loadScript('/node_modules/data-loader/dist/index.js'))
-      .then(() => loadScript('/dist/index.js'));
+      .then(() => loadScript('/dist/index.js?'+Math.random()));
   </script>
+  <style>
+    interpro-entry .link{
+      font-size: 2em;
+    }
+  </style>
 </head>
 <body>
+  <h1>Interpro Type</h1>
   <div>
-    Small, hardcoded:
-    <interpro-type type="family"></interpro-type>
-    <interpro-type type="domain"></interpro-type>
-    <interpro-type type="repeat"></interpro-type>
-    <interpro-type type="site"></interpro-type>
-    <interpro-type type="active site"></interpro-type>
-    <interpro-type type="binding site"></interpro-type>
-    <interpro-type type="conserved site"></interpro-type>
-    <interpro-type type="ptm"></interpro-type>
-    <interpro-type type="undefined"></interpro-type>
+    <div>
+      Small, hardcoded:
+      <interpro-type type="family"></interpro-type>
+      <interpro-type type="domain"></interpro-type>
+      <interpro-type type="repeat"></interpro-type>
+      <interpro-type type="site"></interpro-type>
+      <interpro-type type="active site"></interpro-type>
+      <interpro-type type="binding site"></interpro-type>
+      <interpro-type type="conserved site"></interpro-type>
+      <interpro-type type="ptm"></interpro-type>
+      <interpro-type type="undefined"></interpro-type>
+    </div>
+    <div>
+      Expanded, hardcoded:
+      <interpro-type type="family" expanded></interpro-type>
+      <interpro-type type="domain" expanded></interpro-type>
+      <interpro-type type="repeat" expanded></interpro-type>
+      <interpro-type type="site" expanded></interpro-type>
+      <interpro-type type="active site" expanded></interpro-type>
+      <interpro-type type="binding site" expanded></interpro-type>
+      <interpro-type type="conserved site" expanded></interpro-type>
+      <interpro-type type="ptm" expanded></interpro-type>
+      <interpro-type type="undefined" expanded></interpro-type>
+    </div>
+    <div>
+      Small, from network:
+      <interpro-type>
+        <data-loader>
+          <source
+              src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011528"
+          >
+        </data-loader>
+      </interpro-type>
+    </div>
+    <div>
+      Expanded, from network:
+      <interpro-type expanded>
+        <data-loader>
+          <source
+              src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011528"
+          >
+        </data-loader>
+      </interpro-type>
+    </div>
   </div>
-  <div>
-    Expanded, hardcoded:
-    <interpro-type type="family" expanded></interpro-type>
-    <interpro-type type="domain" expanded></interpro-type>
-    <interpro-type type="repeat" expanded></interpro-type>
-    <interpro-type type="site" expanded></interpro-type>
-    <interpro-type type="active site" expanded></interpro-type>
-    <interpro-type type="binding site" expanded></interpro-type>
-    <interpro-type type="conserved site" expanded></interpro-type>
-    <interpro-type type="ptm" expanded></interpro-type>
-    <interpro-type type="undefined" expanded></interpro-type>
-  </div>
-  <div>
-    Small, from network:
-    <interpro-type>
-      <data-loader>
-        <source
-            src="http://wwwdev.ebi.ac.uk/interpro7/api/entry/interpro/IPR011528"
-        >
-      </data-loader>
-    </interpro-type>
-  </div>
-  <div>
-    Expanded, from network:
-    <interpro-type expanded>
-      <data-loader>
-        <source
-            src="http://wwwdev.ebi.ac.uk/interpro7/api/entry/interpro/IPR011528"
-        >
-      </data-loader>
-    </interpro-type>
-  </div>
+  <h1>Interpro Entry</h1>
+  <ul>
+    <li>
+      Single entry:
+      <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+    </li>
+    <li>
+      Single entry (selected):
+      <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A" selected></interpro-entry>
+    </li>
+    <li>
+      Simple hierarchy:<br/>
+      <interpro-entry accession="IPR024950" type="family" name="Dual specificity phosphatase">
+        <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase">
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+        </interpro-entry>
+      </interpro-entry>
+    </li>
+    <li>
+      Simple hierarchy:<br/>
+      <interpro-entry accession="IPR024950" type="family" name="Dual specificity phosphatase" >
+        <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase" selected>
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>        </interpro-entry>
+        <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase" level="2">
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily B">
+            <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily C"></interpro-entry>
+          </interpro-entry>
+        </interpro-entry>
+      </interpro-entry>
+    </li>
+  </ul>
 </body>
 </html>
