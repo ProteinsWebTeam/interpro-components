@@ -53,6 +53,6 @@
     "skatejs-web-components": "^5.0.0"
   },
   "dependencies": {
-    "data-loader": "^0.1.7"
+    "data-loader": "^0.1.8"
   }
 }

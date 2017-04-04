@@ -2,7 +2,7 @@ class InterproEntry extends HTMLElement {
   static get observedAttributes () {
     return [
       'accession', 'name', 'type', 'level', 'selected',
-      'haschildren', 'state', 'href'
+      'haschildren', 'state', 'href', 'includeexpander'
     ];
   }
 
@@ -11,6 +11,7 @@ class InterproEntry extends HTMLElement {
       this.accession = event.detail.metadata.accession;
       this.name = event.detail.metadata.name.name;
       this.type = event.detail.metadata.type;
+      this._planRender();
     } catch (err) {
       console.error(err);
     }
@@ -29,6 +30,13 @@ class InterproEntry extends HTMLElement {
   }
 
   _handleStateChangeEvent (event) {
+    if (event.target.classList.contains('expander')) {
+      for (const child of this.parentElement.children) {
+        child.removeAttribute('hidden');
+      }
+      event.target.classList.remove('expander');
+      return;
+    }
     switch (this._state) {
       case 'collapsed':
         this._expandTree();
@@ -46,7 +54,7 @@ class InterproEntry extends HTMLElement {
     if (!this.shadowRoot) {
       this.attachShadow({mode: 'open'});
     }
-    if (this.children.length > 0) this.setAttribute('haschildren', 'haschildren');
+    if (this.querySelectorAll('interpro-entry').length > 0) this.setAttribute('haschildren', '');
     for (const child of this.children) {
       child.setAttribute('level', this._level + 1);
     }
@@ -122,20 +130,26 @@ class InterproEntry extends HTMLElement {
           color: #058db7;            
           background-color: lightyellow;
         }
-        .has-children {
-          visibility: visible;
-        }
-        .has-children:after {
-            content: '-';
+        .action-holder:after {
+            content:'';
             font-weight: bold;
             width: 2em;
             text-align: center;
             position: absolute;
             cursor: pointer;
         }
+        .has-children, .expander {
+          visibility: visible;
+        }
+        .has-children:after {
+            content: '-';
+        }
+        .expander:after {
+            content: '...';
+        }
         :host(.hidden) .has-children:after {content: '+';}
       </style>
-      <div style="display: inline-block;">
+      <div style="display: inline-block; white-space: nowrap;">
         <div class="entry"  style="margin-left: ${this._level}rem;">
           <interpro-type type="${this._type}"></interpro-type> 
           <span 
@@ -149,14 +163,18 @@ class InterproEntry extends HTMLElement {
            </span>
           
             <div 
-                class="action-holder ${this._haschildren ? 'has-children' : ''}" 
+                class="
+                    action-holder 
+                    ${this._haschildren ? 'has-children' : ''}
+                    ${this._includeexpander ? 'expander' : ''}
+                    " 
              ></div>
         </div>
       </div>
       <div class="children">${this.innerHTML}</div>
       
     `.trim();
-    // TODO Deal with the link
+    // TODO Deal with the link.
     this.shadowRoot.querySelector('.action-holder').addEventListener('click', this._handleStateChangeEvent);
   }
 
@@ -225,6 +243,13 @@ class InterproEntry extends HTMLElement {
 
   set haschildren (value) {
     this._haschildren = value !== null;
+  }
+  get includeexpander () {
+    return this._includeexpander;
+  }
+
+  set includeexpander (value) {
+    this._includeexpander = value !== null;
   }
   get state () {
     return this._state;

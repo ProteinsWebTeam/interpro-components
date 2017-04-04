@@ -117,6 +117,55 @@
         </interpro-entry>
       </interpro-entry>
     </li>
+    <li>
+      Simple from network:
+      <interpro-entry>
+        <data-loader>
+          <source src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011528">
+        </data-loader>
+      </interpro-entry>
+    </li>
+    <li>
+      Simple from network (Selected):
+      <interpro-entry selected>
+        <data-loader>
+          <source src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011520">
+        </data-loader>
+      </interpro-entry>
+    </li>
+  </ul>
+  <h1>Interpro Hierarchy</h1>
+  <ul>
+    <li>From network<br/>
+      <interpro-hierarchy accession="IPR000001">
+        <data-loader selector="metadata.hierarchy">
+          <source src="http://localhost:8007/api/entry/interpro/IPR000001">
+        </data-loader>
+      </interpro-hierarchy>
+    </li>
+    <li>From network - pruned<br/>
+      <interpro-hierarchy accession="IPR003074" displaymode="pruned">
+        <data-loader selector="metadata.hierarchy">
+          <source src="http://localhost:8007/api/entry/interpro/IPR003074">
+        </data-loader>
+      </interpro-hierarchy>
+    </li>
+    <li>From network - showing up to 2 children<br/>
+      <interpro-hierarchy accession="IPR003074" hideafter="2">
+        <data-loader selector="metadata.hierarchy">
+          <source src="http://localhost:8007/api/entry/interpro/IPR003074">
+        </data-loader>
+      </interpro-hierarchy>
+    </li>
+    <li>From dataloader json<br/>
+      <interpro-hierarchy>
+        <data-loader>
+          <script type="application/json">
+            {"accession":"IPR024178","name":"Oestrogen receptor/oestrogen-related receptor", "type":"Family", "children":[{"accession":"IPR001292","name":"Oestrogen receptor","type":"Family"}, {"accession":"IPR028355","name":"Estrogen receptor beta/gamma","type":"Family"}, {"accession":"IPR027289","name":"Oestrogen-related receptor","type":"Family"}]}
+          </script>
+        </data-loader>
+      </interpro-hierarchy>
+    </li>
   </ul>
 </body>
 </html>
