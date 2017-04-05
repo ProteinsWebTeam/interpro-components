@@ -32,6 +32,17 @@ class InterproHierarchy extends HTMLElement {
     if ('children' in n) return n;
     return false;
   }
+  _moveAccessionToTop (node) {
+    if (!this._accession) return false;
+    if (node.accession === this._accession) return true;
+    if (!node.children) return false;
+    const branches = node.children.map(child => this._moveAccessionToTop(child));
+    const index = branches.indexOf(true);
+    if (index > 0) {
+      [node.children[0], node.children[index]] = [node.children[index], node.children[0]];
+    }
+    return false;
+  }
 
   _json2HTML (hierarchy, hide = false, includeExpander = false) {
     const selected = hierarchy.accession === this._accession ? 'selected' : '';
@@ -55,6 +66,7 @@ class InterproHierarchy extends HTMLElement {
     if (!this.shadowRoot) {
       this.attachShadow({mode: 'open'});
     }
+    this._moveAccessionToTop(this._hierarchy);
     let h = this._hierarchy;
     if (this._displaymode === 'pruned') h = this._pruneTree(this._hierarchy);
     const shadowDom = this.shadyRoot || this.shadowRoot;
@@ -105,15 +117,19 @@ class InterproHierarchy extends HTMLElement {
     this._hideafter = value * 1;
   }
 
+  set hierarchy (value) {
+    this._hierarchy = value;
+    this._planRender();
+  }
   connectedCallback () {
     const dataLoader = this.querySelector('data-loader');
-    if (dataLoader && dataLoader.data) {
-      this._hierarchy = dataLoader.data;
-      this._planRender();
-      return;
+    if (dataLoader) {
+      dataLoader.addEventListener('load', this._handleLoadEvent, {once: true});
+      if (dataLoader.data) {
+        this._hierarchy = dataLoader.data;
+        this._planRender();
+      }
     }
-
-    dataLoader.addEventListener('load', this._handleLoadEvent, {once: true});
   }
 
   attributeChangedCallback (attributeName, oldValue, newValue) {

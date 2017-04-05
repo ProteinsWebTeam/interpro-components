@@ -89,15 +89,17 @@ class InterproEntry extends HTMLElement {
         .entry {
             background-color: #e0e0f0;
             position:relative;
-            padding: 0.2em 10px;
+            padding: 6px 10px;
             margin-bottom: 2px;
+            height: 30px;
+            line-height: 1;
           }
         .entry:before {
           content: '';
           position: absolute;
           width: 0; 
-          height: 1px; 
-          border: 1.2em solid #e0e0f0;
+          height: 0; 
+          border: 21px solid #e0e0f0;
           border-left: 0.5em solid transparent;
           border-right: 0;
           left: -0.45em;
@@ -108,7 +110,7 @@ class InterproEntry extends HTMLElement {
           position: absolute;
           width: 0; 
           height: 0; 
-          border: 1.2em solid transparent;
+          border: 21px solid transparent;
           border-left: 0.5em solid #e0e0f0;
           left:100%;
           top:0;
