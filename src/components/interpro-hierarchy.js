@@ -1,7 +1,7 @@
 
 class InterproHierarchy extends HTMLElement {
   static get observedAttributes () {
-    return ['accession', 'displaymode', 'hideafter'];
+    return ['accession', 'displaymode', 'hideafter', 'hrefroot'];
   }
   _handleLoadEvent (event) {
     try {
@@ -53,9 +53,14 @@ class InterproHierarchy extends HTMLElement {
         name="${hierarchy.name}" ${selected}
         ${hide ? 'hidden' : ''}
         ${includeExpander ? 'includeexpander' : ''}
+        ${this._hrefroot ? `href="${this._hrefroot}/${hierarchy.accession}"` : ''}
       >
         ${hierarchy.children ? hierarchy.children.map(
-            (child, i) => this._json2HTML(child, i >= this._hideafter, i + 1 === this._hideafter)
+            (child, i) => this._json2HTML(
+              child,
+              i >= this._hideafter,
+              i + 1 === this._hideafter && hierarchy.children.length > i + 1
+            )
           ).join('') : ''
         } 
       </interpro-entry>
@@ -91,6 +96,7 @@ class InterproHierarchy extends HTMLElement {
     // set defaults
     this._displaymode = 'full';
     this._hideafter = Infinity;
+    this._hrefroot = null;
     this._handleLoadEvent = this._handleLoadEvent.bind(this);
     this._json2HTML = this._json2HTML.bind(this);
     this._render = this._render.bind(this);
@@ -103,6 +109,12 @@ class InterproHierarchy extends HTMLElement {
   }
   set accession (value) {
     this._accession = value;
+  }
+  get hrefroot () {
+    return this._hrefroot;
+  }
+  set hrefroot (value) {
+    this._hrefroot = value;
   }
   get displaymode () {
     return this._displaymode;

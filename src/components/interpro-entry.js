@@ -59,6 +59,7 @@ class InterproEntry extends HTMLElement {
       child.setAttribute('level', this._level + 1);
     }
     const shadowDom = this.shadyRoot || this.shadowRoot;
+    const link = this._href || `https://www.ebi.ac.uk/interpro/entry/${this._accession}`;
     shadowDom.innerHTML = `
       <style>
         .link {
@@ -159,7 +160,7 @@ class InterproEntry extends HTMLElement {
                 font-family: 'Helvetica Neue', Verdana, sans-serif;
                 font-weight: ${this._selected ? 'bold' : 'normal'}
           ">
-              <a class="${this._selected ? '' : 'link'}" ${this._href ? 'href="' + this._href + '"' : ''}>
+              <a class="${this._selected ? '' : 'link'}" ${this._selected ? '' : `href="${link}"`}>
                    ${this._name}
                </a> (${this._accession})
            </span>
@@ -176,7 +177,6 @@ class InterproEntry extends HTMLElement {
       <div class="children">${this.innerHTML}</div>
       
     `.trim();
-    // TODO Deal with the link.
     this.shadowRoot.querySelector('.action-holder').addEventListener('click', this._handleStateChangeEvent);
   }
 
