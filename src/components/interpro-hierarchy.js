@@ -1,7 +1,7 @@
 
 class InterproHierarchy extends HTMLElement {
   static get observedAttributes () {
-    return ['accession', 'displaymode', 'hideafter', 'hrefroot'];
+    return ['accession', 'accessions', 'displaymode', 'hideafter', 'hrefroot'];
   }
   _handleLoadEvent (event) {
     try {
@@ -12,25 +12,47 @@ class InterproHierarchy extends HTMLElement {
     }
   }
 
-  _pruneTree (node) {
-    const {children, accession, name, type} = node;
-    const n = {accession, name, type};
-    if (accession === this._accession) {
-      if (children) {
-        n['children'] = children.map(
-          ({accession, name, type}) => ({accession, name, type})
-        );
-      }
-      return n;
+  _pruneTreeMarking (node) {
+    const {children, accession} = node;
+    node.pruned = true;
+    if (this._accessions.find(e => e === accession)) {
+      node.pruned = false;
     }
     if (children) {
       for (const child of children) {
-        const prunnedChild = this._pruneTree(child);
-        if (prunnedChild) n['children'] = [prunnedChild];
+        if (!this._pruneTreeMarking(child)) node.pruned = false;
       }
     }
-    if ('children' in n) return n;
+    return node.pruned;
+  }
+  _pruneTreePruning (node) {
+    const {children, accession, name, type} = node;
+    const n = {accession, name, type};
+    if (!node.pruned) {
+      if (children) {
+        for (const child of children) {
+          const survivor = this._pruneTreePruning(child);
+          if (survivor) {
+            if (!n['children']) n['children'] = [];
+            n['children'].push(survivor);
+          } else if (!this._displaymode.includes('no-children')) {
+            if (!n['children']) n['children'] = [];
+            n['children'].push({
+              accession: child.accession,
+              name: child.name,
+              type: child.type
+            });
+          }
+        }
+      }
+      return n;
+    }
     return false;
+  }
+
+  _pruneTree (node) {
+    this._pruneTreeMarking(node);
+    return this._pruneTreePruning(node);
   }
   _moveAccessionToTop (node) {
     if (!this._accession) return false;
@@ -73,9 +95,15 @@ class InterproHierarchy extends HTMLElement {
     }
     this._moveAccessionToTop(this._hierarchy);
     let h = this._hierarchy;
-    if (this._displaymode === 'pruned') h = this._pruneTree(this._hierarchy);
+    if (this._displaymode.includes('pruned')) {
+      h = Array.isArray(h)
+        ? h.map(n => this._pruneTree(n))
+        : this._pruneTree(this._hierarchy);
+    }
     const shadowDom = this.shadyRoot || this.shadowRoot;
-    shadowDom.innerHTML = this._json2HTML(h).trim();
+    shadowDom.innerHTML = Array.isArray(h)
+      ? h.map(n => this._json2HTML(n).trim()).join('')
+      : this._json2HTML(h).trim();
   }
   _planRender () {
     // console.log('planning rendering');
@@ -109,6 +137,12 @@ class InterproHierarchy extends HTMLElement {
   }
   set accession (value) {
     this._accession = value;
+  }
+  get accessions () {
+    return this._accessions;
+  }
+  set accessions (value) {
+    this._accessions = Array.isArray(value) ? value : value.split(',');
   }
   get hrefroot () {
     return this._hrefroot;
