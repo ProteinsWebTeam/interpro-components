@@ -125,7 +125,7 @@ class InterproEntry extends HTMLElement {
           top: 2em;
           border:0;
           background-color: white;
-          z-index: 10;
+          z-index: 2;
           visibility: hidden;
           color: #055d97;
         }
