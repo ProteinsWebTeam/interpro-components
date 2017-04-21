@@ -1,3 +1,5 @@
+const HARDCODED_SIZE = 21;// TODO: change that to something not fixed
+
 class InterproEntry extends HTMLElement {
   static get observedAttributes () {
     return [
@@ -71,14 +73,14 @@ class InterproEntry extends HTMLElement {
           color: royalblue;
         }
         .children {
-              /*animation: fade 0.5s;*/
-            transform-origin: top right;
-            transform: scaleY(1);
-            /*height: 100%;*/
-            opacity: 1;
-            transition-property: opacity, transform, max-height;
-            transition-timing-function: ease;
-            transition-duration: 0.2s;
+          /*animation: fade 0.5s;*/
+          transform-origin: top right;
+          transform: scaleY(1);
+          /*height: 100%;*/
+          opacity: 1;
+          transition-property: opacity, transform, max-height;
+          transition-timing-function: ease;
+          transition-duration: 0.2s;
         }
         :host(.hidden) .children {
           transform-origin: top right;
@@ -88,19 +90,19 @@ class InterproEntry extends HTMLElement {
           transition-duration: 0s;
         }
         .entry {
-            background-color: #e0e0f0;
-            position:relative;
-            padding: 6px 10px;
-            margin-bottom: 2px;
-            height: 30px;
-            line-height: 1;
-          }
+          background-color: #e0e0f0;
+          position: relative;
+          padding: 6px 10px;
+          margin-bottom: 2px;
+          height: ${HARDCODED_SIZE * 2}px;
+          line-height: 1;
+        }
         .entry:before {
           content: '';
           position: absolute;
           width: 0; 
           height: 0; 
-          border: 21px solid #e0e0f0;
+          border: ${HARDCODED_SIZE}px solid #e0e0f0;
           border-left: 0.5em solid transparent;
           border-right: 0;
           left: -0.45em;
@@ -111,19 +113,19 @@ class InterproEntry extends HTMLElement {
           position: absolute;
           width: 0; 
           height: 0; 
-          border: 21px solid transparent;
+          border: ${HARDCODED_SIZE}px solid transparent;
           border-left: 0.5em solid #e0e0f0;
-          left:100%;
-          top:0;
+          left: 100%;
+          top: 0;
         }
         .action-holder {
           position: absolute;
           width: 2em; 
           height: 1em; 
           border-radius: 0.3em;
-          left:3.5em;
+          left: 3.5em;
           top: 2em;
-          border:0;
+          border: 0;
           background-color: white;
           z-index: 2;
           visibility: hidden;
@@ -134,21 +136,21 @@ class InterproEntry extends HTMLElement {
           background-color: lightyellow;
         }
         .action-holder:after {
-            content:'';
-            font-weight: bold;
-            width: 2em;
-            text-align: center;
-            position: absolute;
-            cursor: pointer;
+          content: '';
+          font-weight: bold;
+          width: 2em;
+          text-align: center;
+          position: absolute;
+          cursor: pointer;
         }
         .has-children, .expander {
           visibility: visible;
         }
         .has-children:after {
-            content: '-';
+          content: '-';
         }
         .expander:after {
-            content: '...';
+          content: '…';
         }
         :host(.hidden) .has-children:after {content: '+';}
       </style>
