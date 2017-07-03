@@ -20,13 +20,12 @@ export default {
     }),
     eslint(),
     babel({
-      plugins: ['transform-es2015-for-of'],
       presets: ['es2016', 'es2017', 'stage-3'],
       env: {
         production: {
           presets: ['babili'],
-        }
-      }
+        },
+      },
     }),
   ],
 };

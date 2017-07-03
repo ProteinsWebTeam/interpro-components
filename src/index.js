@@ -1,7 +1,7 @@
-import {InterproType, InterproEntry, InterproHierarchy} from './components';
+import { InterproType, InterproEntry, InterproHierarchy } from './components';
 
 if (window.customElements) {
-  customElements.define('interpro-type', InterproType);
+  customElements.define(InterproType.is, InterproType);
   customElements.define('interpro-entry', InterproEntry);
   customElements.define('interpro-hierarchy', InterproHierarchy);
 }

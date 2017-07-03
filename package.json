@@ -1,6 +1,6 @@
 {
   "name": "interpro-components",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "InterPro components using standard Web Components",
   "files": [
     "dist",
@@ -22,6 +22,16 @@
     "interpro",
     "ebi"
   ],
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
+    ],
+    "src/**/*.js": [
+      "prettier --single-quote --trailing-comma all --write",
+      "git add"
+    ]
+  },
   "scripts": {
     "lint": "eslint --ignore-path .gitignore \"./**/*.js\"",
     "bundle": "rollup -c",
@@ -29,30 +39,31 @@
     "build": "rimraf dist && npm run bundle -- --environment NODE_ENV:production",
     "start": "rimraf dist && npm run livereload & npm run bundle -- --watch",
     "test": "echo 'no test at the moment'",
+    "precommit": "lint-staged",
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "babel-plugin-transform-es2015-for-of": "^6.18.0",
-    "babel-preset-babili": "0.0.9",
-    "babel-preset-es2016": "^6.16.0",
-    "babel-preset-es2017": "^6.16.0",
-    "babel-preset-stage-2": "^6.18.0",
-    "babel-preset-stage-3": "^6.17.0",
-    "eslint": "^3.10.2",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-standard": "^2.0.1",
-    "livereload": "^0.6.0",
-    "rimraf": "^2.5.4",
-    "rollup": "^0.36.4",
-    "rollup-plugin-babel": "^2.6.1",
-    "rollup-plugin-eslint": "^3.0.0",
-    "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-watch": "^2.5.0",
+    "babel-preset-babili": "^0.1.4",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "eslint": "^4.1.1",
+    "eslint-config-prettier": "^2.3.0",
+    "husky": "^0.14.2",
+    "lint-staged": "^4.0.0",
+    "livereload": "^0.6.2",
+    "prettier": "^1.5.2",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.43.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-eslint": "^4.0.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-watch": "^4.0.0",
     "skatejs-web-components": "^5.0.0"
   },
-  "dependencies": {
-    "data-loader": "^0.1.8"
-  }
+  "peerDependencies": {
+    "data-loader": "^0.2.0"
+  },
+  "false": {}
 }

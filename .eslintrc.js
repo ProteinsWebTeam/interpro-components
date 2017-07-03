@@ -1,17 +1,20 @@
 const PROD = process.env.NODE_ENV === 'production';
 
-const rules= {
-  'comma-dangle': ['warn', 'only-multiline'],
-  'semi': ['warn', 'always', {'omitLastInOneLineBlock': true}],
-};
+const rules = {};
 
 if (!PROD) {
   rules['no-debugger'] = ['off'];
 }
 
 module.exports = {
-  extends: ['standard', 'plugin:import/errors', 'plugin:import/warnings',],
-  plugins: ['import'],
+  parserOptions: {
+    ecmaVersion: 2017,
+    sourceType: 'module',
+    ecmaFeatures: {
+      modules: true,
+    },
+  },
+  extends: ['prettier'],
   rules,
   env: {
     browser: true,

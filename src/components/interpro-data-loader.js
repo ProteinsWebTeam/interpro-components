@@ -1,15 +1,15 @@
 const entryIdPattern = /^[A-Z0-9]{3,}$/;
 
-const idToUrl = ((url) => id => `${url}${id}`)(`
-  //www.example.com/
-`.trim().replace('\n', ''));
+const idToUrl = (url => id => `${url}${id}`)(
+  '//www.example.com/'.trim().replace('\n', ''),
+);
 
 class InterproDataLoader extends HTMLElement {
-  static get observedAttributes () {
+  static get observedAttributes() {
     return ['entryid'];
   }
 
-  _render () {
+  _render() {
     const id = this.entryid;
     // Clean up the DOM
     const sources = this.querySelectorAll('source');
@@ -22,12 +22,12 @@ class InterproDataLoader extends HTMLElement {
     const source = document.createElement('source');
     source.src = idToUrl(id);
     let dataLoader = this.querySelector(
-      InterproDataLoader.dataLoaderElementName
+      InterproDataLoader.dataLoaderElementName,
     );
     // If no data loader yet, create and add it
     if (!dataLoader) {
       dataLoader = document.createElement(
-        InterproDataLoader.dataLoaderElementName
+        InterproDataLoader.dataLoaderElementName,
       );
       dataLoader.appendChild(source);
       this.appendChild(dataLoader);
@@ -36,7 +36,7 @@ class InterproDataLoader extends HTMLElement {
     }
   }
 
-  _planRender () {
+  _planRender() {
     // If render is already planned, skip
     if (this._plannedRender) return;
     this._plannedRender = true;
@@ -48,11 +48,11 @@ class InterproDataLoader extends HTMLElement {
 
   // Getters/Setters
   // entryid
-  get entryid () {
+  get entryid() {
     return this._entryid;
   }
 
-  set entryid (value) {
+  set entryid(value) {
     const _value = (value || '').trim().toUpperCase();
     if (_value && !entryIdPattern.test(_value)) {
       throw new Error(`${value} is not a valid entry ID`);
@@ -67,21 +67,21 @@ class InterproDataLoader extends HTMLElement {
   }
 
   // Custom element reactions
-  constructor () {
+  constructor() {
     super();
     // set defaults
     this._entryid = null;
   }
 
-  connectedCallback () {
+  connectedCallback() {
     this._planRender();
   }
 
-  disconnectedCallback () {
+  disconnectedCallback() {
     this._plannedRender = false;
   }
 
-  attributeChangedCallback (attributeName, oldValue, newValue) {
+  attributeChangedCallback(attributeName, oldValue, newValue) {
     if (oldValue === newValue) return;
     this[attributeName] = newValue;
   }
