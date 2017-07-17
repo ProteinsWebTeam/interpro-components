@@ -1,17 +1,94 @@
 const supportedTypes = new Map([
-  ['family', { full: 'Family', small: 'F', color: '#EC1D25' }],
+  [
+    'family',
+    {
+      full: 'Family',
+      small: 'F',
+      color: '#EC1D25',
+      colors: ['#d41813', 'rgb(245, 69, 40)', 'rgb(212, 24, 19)'],
+    },
+  ],
   [
     'homologous superfamily',
-    { full: 'Homologous Superfamily', small: 'H', color: '#304CE3' },
+    {
+      full: 'Homologous Superfamily',
+      small: 'H',
+      color: '#304CE3',
+      colors: ['#304CE3', '#405CF3', '#304CE3'],
+    },
   ],
-  ['domain', { full: 'Domain', small: 'D', color: '#45B41A' }],
-  ['repeat', { full: 'Repeat', small: 'R', color: '#FF830A' }],
-  ['site', { full: 'Site', small: 'S', color: '#A336C6' }],
-  ['active site', { full: 'Active Site', small: 'S', color: '#A336C6' }],
-  ['binding site', { full: 'Binding Site', small: 'S', color: '#A336C6' }],
-  ['conserved site', { full: 'Conserved Site', small: 'S', color: '#A336C6' }],
-  ['ptm', { full: 'PTM', small: 'S', color: '#A336C6' }],
-  ['unknown', { full: 'Unknown', small: 'U', color: '#D3C5BC' }],
+  [
+    'domain',
+    {
+      full: 'Domain',
+      small: 'D',
+      color: '#45B41A',
+      colors: ['#36a30f', 'rgb(80, 187, 48)', 'rgb(54, 163, 15)'],
+    },
+  ],
+  [
+    'repeat',
+    {
+      full: 'Repeat',
+      small: 'R',
+      color: '#FF830A',
+      colors: ['#ff8511', '#ffa249', '#ff8511'],
+    },
+  ],
+  [
+    'site',
+    {
+      full: 'Site',
+      small: 'S',
+      color: '#A336C6',
+      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+    },
+  ],
+  [
+    'active site',
+    {
+      full: 'Active Site',
+      small: 'S',
+      color: '#A336C6',
+      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+    },
+  ],
+  [
+    'binding site',
+    {
+      full: 'Binding Site',
+      small: 'S',
+      color: '#A336C6',
+      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+    },
+  ],
+  [
+    'conserved site',
+    {
+      full: 'Conserved Site',
+      small: 'S',
+      color: '#A336C6',
+      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+    },
+  ],
+  [
+    'ptm',
+    {
+      full: 'PTM',
+      small: 'S',
+      color: '#A336C6',
+      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+    },
+  ],
+  [
+    'unknown',
+    {
+      full: 'Unknown',
+      small: 'U',
+      color: '#D3C5BC',
+      colors: ['#737373', '#8c8c8c', '#737373'],
+    },
+  ],
 ]);
 
 class InterproType extends HTMLElement {
@@ -37,41 +114,61 @@ class InterproType extends HTMLElement {
       this.attachShadow({ mode: 'open' });
     }
     (this.shadyRoot || this.shadowRoot).innerHTML = `
-      <span class="root"
-        style="
-          display: inline-block;
-          font-family: 'Helvetica Neue', Verdana, sans-serif;
-          margin: 0.1rem;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-        "
-      >
-        <span class="small"
+      <svg viewBox="0 0 72 72" width="${this._width}">
+        <defs>
+          <clipPath id="cut-off-center"><rect x="33%" y="33%" width="70" height="70"></rect></clipPath>
+          <clipPath id="cut-off-bottom"><polygon points="0,68 68,0 68,68"></polygon></clipPath>
+        </defs>
+        <rect
+          x="12" y="12"
+          width="60" height="60"
+          style="fill: black; opacity: 0.15"
+        />
+        <rect
+          x="4" y="4"
+          width="60" height="60"
+          stroke-width="8"
+          stroke="${this._type.colors[0]}"
+          fill="${this._type.colors[1]}"
+        />
+        <polygon points="0,68 68,0 68,68" fill="${this._type.colors[2]}" />
+        <text
+          x="50%" y="50%"
+          text-anchor="middle"
+          dx="-2px" dy="20px"
           style="
-            display: inline-block;
-            margin: 0.1rem;
-            padding: 0 0.4rem;
-            border: 1px gray solid;
-            border-radius: 0.2rem;
-            line-height: 1.5;
-            background: ${this._type.color};
-            color: white;
+            fill: white;
+            font-size: 60px;
+            font-weight: 700;
+            font-family: 'Montserrat', 'arial', 'serif';
           "
         >
           ${this._type.small}
-        </span>
-        ${this.expanded
-          ? `
-            <span class="full"
-              style="background: none; color: ${this._type.color};"
-            >
-              ${this._type.full}
-            </span>
-          `
-          : ''}
-      </span>
+        </text>
+        <text
+          x="50%" y="50%"
+          text-anchor="middle"
+          dx="-2px" dy="20px"
+          clip-path="url(#cut-off-bottom)"
+          style="
+            fill: #e6e6e6;
+            font-size: 60px;
+            font-weight: 700;
+            font-family: 'Montserrat', 'arial', 'serif';
+          "
+        >
+          ${this._type.small}
+        </text>
+      </svg>
+      ${this.expanded
+        ? `
+          <span class="full"
+            style="background: none; color: ${this._type.color};"
+          >
+            ${this._type.full}
+          </span>
+        `
+        : ''}
     `.trim();
   }
 
@@ -125,6 +222,7 @@ class InterproType extends HTMLElement {
     // set defaults
     this._type = supportedTypes.get('unknown');
     this._expanded = false;
+    this._width = this.getAttribute('width') || '2em';
     this._handleLoadEvent = this._handleLoadEvent.bind(this);
     this._render = this._render.bind(this);
   }
