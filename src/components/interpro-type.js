@@ -118,14 +118,9 @@ class InterproType extends HTMLElement {
         div.container {
           display: -webkit-flex; /* Safari */
           -webkit-align-items: center; /* Safari 7.0+ */
-          display: inline-flex;
+          display: flex;
           align-items: center;
-          -webkit-justify-content:center;
-          justify-content:center; 
-        }
-      div.container>svg {
-        vertical-align: middle;
-      }
+        }      
 
       </style>
       <div class="container">
@@ -180,7 +175,7 @@ class InterproType extends HTMLElement {
             <span class="full"
               style="background: none; color: ${this._type.color};"
             >
-              ${this._type.full}
+              &nbsp;${this._type.full}
             </span>
           `
           : ''}
@@ -238,7 +233,7 @@ class InterproType extends HTMLElement {
     // set defaults
     this._type = supportedTypes.get('unknown');
     this._expanded = false;
-    this._width = this.getAttribute('width') || '1em';
+    this._width = this.getAttribute('width') || '22px';
     this._handleLoadEvent = this._handleLoadEvent.bind(this);
     this._render = this._render.bind(this);
   }
