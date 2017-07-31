@@ -191,6 +191,7 @@ class InterproHierarchy extends HTMLElement {
     this._hierarchy = value;
     this._planRender();
   }
+
   connectedCallback() {
     const dataLoader = this.querySelector('data-loader');
     if (dataLoader) {
