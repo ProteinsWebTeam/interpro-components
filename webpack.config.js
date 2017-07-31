@@ -4,15 +4,13 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const pkg = require('./package.json');
-
 module.exports = (env = { dev: true }) => ({
   entry: env.dev
     ? path.resolve(__dirname, 'example', 'index.js')
     : path.resolve(__dirname, 'src', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: env.dev ? '[id].[name].[hash].js' : `${pkg.name}.js`,
+    filename: env.dev ? '[id].[name].[hash].js' : 'index.js',
   },
   resolve: {
     modules: [path.resolve('.', 'src'), path.resolve('.', 'node_modules')],
