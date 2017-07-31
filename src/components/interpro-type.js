@@ -97,7 +97,7 @@ class InterproType extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['type', 'expanded'];
+    return ['type', 'size', 'expanded'];
   }
 
   _handleLoadEvent(event) {
@@ -115,16 +115,12 @@ class InterproType extends HTMLElement {
     }
     (this.shadyRoot || this.shadowRoot).innerHTML = `
       <style>
-        div.container {
-          display: -webkit-flex; /* Safari */
-          -webkit-align-items: center; /* Safari 7.0+ */
-          display: flex;
-          align-items: center;
-        }      
-
+        .container {
+          display: inline-flex;
+        }
       </style>
-      <div class="container">
-        <svg viewBox="0 0 72 72" width="${this._width}">
+      <span class="container">
+        <svg viewBox="0 0 72 72" width="${this._size}" height="${this._size}">
           <defs>
             <clipPath id="cut-off-center"><rect x="33%" y="33%" width="70" height="70"></rect></clipPath>
             <clipPath id="cut-off-bottom"><polygon points="0,68 68,0 68,68"></polygon></clipPath>
@@ -179,7 +175,7 @@ class InterproType extends HTMLElement {
             </span>
           `
           : ''}
-      </div>
+      </span>
     `.trim();
   }
 
@@ -227,13 +223,28 @@ class InterproType extends HTMLElement {
     this._render();
   }
 
+  // size
+  get size() {
+    return this._size;
+  }
+
+  set size(value) {
+    // bail if same parsed value
+    if (value === this._size) return;
+    // store new value
+    this._size = value;
+    // mirror attribute
+    this.setAttribute('size', value);
+    this._render();
+  }
+
   // Custom element reactions
   constructor() {
     super();
     // set defaults
     this._type = supportedTypes.get('unknown');
     this._expanded = false;
-    this._width = this.getAttribute('width') || '22px';
+    this._size = this.getAttribute('size') || getComputedStyle(this).lineHeight;
     this._handleLoadEvent = this._handleLoadEvent.bind(this);
     this._render = this._render.bind(this);
   }

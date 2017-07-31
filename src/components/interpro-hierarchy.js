@@ -1,4 +1,8 @@
 class InterproHierarchy extends HTMLElement {
+  static get is() {
+    return 'interpro-hierarchy';
+  }
+
   static get observedAttributes() {
     return ['accession', 'accessions', 'displaymode', 'hideafter', 'hrefroot'];
   }

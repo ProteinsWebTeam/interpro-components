@@ -1,6 +1,8 @@
-const HARDCODED_SIZE = 21; // TODO: change that to something not fixed
-
 class InterproEntry extends HTMLElement {
+  static get is() {
+    return 'interpro-entry';
+  }
+
   static get observedAttributes() {
     return [
       'accession',
@@ -95,7 +97,7 @@ class InterproEntry extends HTMLElement {
           transform-origin: top right;
           transform: scaleY(0.1);
           opacity: 0;
-          max-height: 0em;
+          max-height: 0;
           transition-duration: 0s;
         }
         .entry {
@@ -105,34 +107,12 @@ class InterproEntry extends HTMLElement {
           margin-bottom: 2px;
           line-height: 1;
         }
-        .entry::before {
-          content: '';
-          position: absolute;
-          width: 0; 
-          height: 0; 
-          border: ${HARDCODED_SIZE}px solid #e0e0f0;
-          border-left: 0.5em solid transparent;
-          border-right: 0;
-          left: -0.45em;
-          top: 0;
-        }
-        .entry::after {
-          content: '';
-          position: absolute;
-          width: 0; 
-          height: 0; 
-          border: ${HARDCODED_SIZE}px solid transparent;
-          border-left: 0.5em solid #e0e0f0;
-          left: 100%;
-          top: 0;
-        }
         .action-holder {
           position: absolute;
           width: 2em; 
           height: 1em; 
           border-radius: 0.3em;
           left: 3.5em;
-          top: 2em;
           border: 0;
           background-color: white;
           z-index: 2;

@@ -58,8 +58,7 @@ down to the version you are planning on supporting.
 
 You might need to use a polyfill for browsers not supporting Custom
 Elements **v1** (not v0).
-See [webcomponents.js](https://github.com/webcomponents/webcomponentsjs) or
-[SkateJS Web Components](https://github.com/skatejs/web-components).
+See [webcomponents.js](https://github.com/webcomponents/webcomponentsjs).
 
 ## List of components included
 

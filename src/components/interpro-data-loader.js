@@ -5,6 +5,10 @@ const idToUrl = (url => id => `${url}${id}`)(
 );
 
 class InterproDataLoader extends HTMLElement {
+  static get is() {
+    return 'interpro-data-loader';
+  }
+
   static get observedAttributes() {
     return ['entryid'];
   }

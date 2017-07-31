@@ -1,6 +1,6 @@
 {
   "name": "interpro-components",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "InterPro components using standard Web Components",
   "files": [
     "dist",
@@ -23,47 +23,45 @@
     "ebi"
   ],
   "lint-staged": {
-    "*.js": [
-      "prettier --single-quote --trailing-comma es5 --write",
-      "git add"
-    ],
-    "src/**/*.js": [
-      "prettier --single-quote --trailing-comma all --write",
-      "git add"
-    ]
+    "concurrent": false,
+    "linters": {
+      "*.js": [
+        "prettier --single-quote --trailing-comma es5 --write",
+        "git add"
+      ],
+      "src/**/*.js": [
+        "prettier --single-quote --trailing-comma all --write",
+        "git add"
+      ]
+    }
   },
   "scripts": {
-    "lint": "eslint --ignore-path .gitignore \"./**/*.js\"",
-    "bundle": "rollup -c",
-    "livereload": "livereload \"dist, test\"",
-    "build": "rimraf dist && npm run bundle -- --environment NODE_ENV:production",
-    "start": "rimraf dist && npm run livereload & npm run bundle -- --watch",
-    "test": "echo 'no test at the moment'",
+    "bundle": "webpack",
+    "prebuild": "npm run test",
+    "build": "rimraf dist && npm run bundle -- --env.prod",
+    "start": "webpack-dev-server",
+    "test": "npm run test:lint",
+    "test:lint": "eslint --ignore-path .gitignore \"./**/*.js\"",
     "precommit": "lint-staged",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "babel-preset-babili": "^0.1.4",
-    "babel-preset-es2016": "^6.24.1",
-    "babel-preset-es2017": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-preset-stage-3": "^6.24.1",
+    "@webcomponents/webcomponentsjs": "^1.0.3",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "data-loader": "^0.2.0",
     "eslint": "^4.1.1",
     "eslint-config-prettier": "^2.3.0",
+    "html-webpack-plugin": "^2.29.0",
     "husky": "^0.14.2",
     "lint-staged": "^4.0.0",
-    "livereload": "^0.6.2",
     "prettier": "^1.5.2",
     "rimraf": "^2.6.1",
-    "rollup": "^0.43.0",
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-eslint": "^4.0.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-watch": "^4.0.0",
-    "skatejs-web-components": "^5.0.0"
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "^2.6.1"
   },
   "peerDependencies": {
     "data-loader": "^0.2.0"
-  },
-  "false": {}
+  }
 }
