@@ -117,7 +117,9 @@ class InterproType extends HTMLElement {
       <style>
         .container {
           display: inline-flex;
+          align-items:center;
         }
+        .container span {line-height:0;}
       </style>
       <span class="container">
         <svg viewBox="0 0 72 72" width="${this._size}" height="${this._size}">
@@ -169,7 +171,7 @@ class InterproType extends HTMLElement {
         ${this.expanded
           ? `
             <span class="full"
-              style="background: none; color: ${this._type.color};"
+              style="color: ${this._type.color};"
             >
               &nbsp;${this._type.full}
             </span>
