@@ -4,8 +4,13 @@ const supportedTypes = new Map([
     {
       full: 'Family',
       small: 'F',
-      color: '#EC1D25',
-      colors: ['#d41813', 'rgb(245, 69, 40)', 'rgb(212, 24, 19)'],
+      // color: '#EC1D25',
+      color: '#ec7865',
+      colors: [
+        '#ec7865',
+        '#fb5d43',
+        'rgb(212, 24, 19)',
+      ] /*color icon - color text -?*/,
     },
   ],
   [
@@ -13,8 +18,9 @@ const supportedTypes = new Map([
     {
       full: 'Homologous Superfamily',
       small: 'H',
-      color: '#304CE3',
-      colors: ['#304CE3', '#405CF3', '#304CE3'],
+      // color: '#304CE3',
+      color: '#6caed4',
+      colors: ['#6caed4', '#405CF3', '#304CE3'],
     },
   ],
   [
@@ -22,8 +28,9 @@ const supportedTypes = new Map([
     {
       full: 'Domain',
       small: 'D',
-      color: '#45B41A',
-      colors: ['#36a30f', 'rgb(80, 187, 48)', 'rgb(54, 163, 15)'],
+      // color: '#45B41A',
+      color: '#70c770',
+      colors: ['#70c770', 'rgb(80, 187, 48)', 'rgb(54, 163, 15)'],
     },
   ],
   [
@@ -31,8 +38,9 @@ const supportedTypes = new Map([
     {
       full: 'Repeat',
       small: 'R',
-      color: '#FF830A',
-      colors: ['#ff8511', '#ffa249', '#ff8511'],
+      // color: '#FF830A',
+      color: '#ffa970',
+      colors: ['#ffa970', '#efa55f', '#ff8511'],
     },
   ],
   [
@@ -40,8 +48,9 @@ const supportedTypes = new Map([
     {
       full: 'Site',
       small: 'S',
-      color: '#A336C6',
-      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+      // color: '#A336C6' '#d09ad0',
+      color: '#ce94ce',
+      colors: ['#ce94ce', '#bb71bb', '#a83cc9'],
     },
   ],
   [
@@ -49,8 +58,9 @@ const supportedTypes = new Map([
     {
       full: 'Active Site',
       small: 'S',
-      color: '#A336C6',
-      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+      // color: '#A336C6',
+      color: '#ce94ce',
+      colors: ['#ce94ce', '#bb71bb', '#a83cc9'],
     },
   ],
   [
@@ -58,8 +68,9 @@ const supportedTypes = new Map([
     {
       full: 'Binding Site',
       small: 'S',
-      color: '#A336C6',
-      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+      // color: '#A336C6',
+      color: '#ce94ce',
+      colors: ['#ce94ce', '#bb71bb', '#a83cc9'],
     },
   ],
   [
@@ -67,8 +78,9 @@ const supportedTypes = new Map([
     {
       full: 'Conserved Site',
       small: 'S',
-      color: '#A336C6',
-      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+      // color: '#A336C6',
+      color: '#ce94ce',
+      colors: ['#ce94ce', '#bb71bb', '#a83cc9'],
     },
   ],
   [
@@ -76,8 +88,9 @@ const supportedTypes = new Map([
     {
       full: 'PTM',
       small: 'S',
-      color: '#A336C6',
-      colors: ['#a83cc9', '#c646ec', '#a83cc9'],
+      // color: '#A336C6',
+      color: '#ce94ce',
+      colors: ['#ce94ce', '#bb71bb', '#a83cc9'],
     },
   ],
   [
@@ -115,63 +128,41 @@ class InterproType extends HTMLElement {
     }
     (this.shadyRoot || this.shadowRoot).innerHTML = `
       <style>
-        .container {
+        .svg-container {
           display: inline-flex;
           align-items:center;
-        }
-        .container span {line-height:0;}
+        }      
       </style>
-      <span class="container">
-        <svg viewBox="0 0 72 72" width="${this._size}" height="${this._size}">
-          <defs>
-            <clipPath id="cut-off-center"><rect x="33%" y="33%" width="70" height="70"></rect></clipPath>
-            <clipPath id="cut-off-bottom"><polygon points="0,68 68,0 68,68"></polygon></clipPath>
-          </defs>
+      <span class="svg-container">
+        <svg viewBox="0 0 60 60" width="${this._size}" height="${this._size}">
+               
           <rect
-            x="12" y="12"
-            width="60" height="60"
-            style="fill: black; opacity: 0.15"
+            x="0" y="0"
+            width="60" height="60"          
+            fill="${this._type.colors[0]}"
           />
-          <rect
-            x="4" y="4"
-            width="60" height="60"
-            stroke-width="8"
-            stroke="${this._type.colors[0]}"
-            fill="${this._type.colors[1]}"
-          />
-          <polygon points="0,68 68,0 68,68" fill="${this._type.colors[2]}" />
+        
           <text
             x="50%" y="50%"
             text-anchor="middle"
-            dx="-2px" dy="20px"
+            dx="0" dy="18px"
             style="
               fill: white;
-              font-size: 60px;
+              font-size: 50px;
               font-weight: 700;
               font-family: 'Montserrat', 'arial', 'serif';
             "
           >
             ${this._type.small}
           </text>
-          <text
-            x="50%" y="50%"
-            text-anchor="middle"
-            dx="-2px" dy="20px"
-            clip-path="url(#cut-off-bottom)"
-            style="
-              fill: #e6e6e6;
-              font-size: 60px;
-              font-weight: 700;
-              font-family: 'Montserrat', 'arial', 'serif';
-            "
-          >
+          
             ${this._type.small}
           </text>
         </svg>
         ${this.expanded
           ? `
-            <span class="full"
-              style="color: ${this._type.color};"
+            <span
+              style="color: ${this._type.colors[1]};"
             >
               &nbsp;${this._type.full}
             </span>
