@@ -150,6 +150,7 @@ class InterproHierarchy extends HTMLElement {
     this._render = this._render.bind(this);
     this._planRender = this._planRender.bind(this);
     this._pruneTree = this._pruneTree.bind(this);
+    this._accessions = [];
   }
 
   get accession() {
