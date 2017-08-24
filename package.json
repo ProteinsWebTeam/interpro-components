@@ -1,6 +1,6 @@
 {
   "name": "interpro-components",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "InterPro components using standard Web Components",
   "files": [
     "dist",
