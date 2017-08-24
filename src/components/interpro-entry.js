@@ -73,6 +73,9 @@ class InterproEntry extends HTMLElement {
     const shadowDom = this.shadyRoot || this.shadowRoot;
     const link =
       this._href || `https://www.ebi.ac.uk/interpro/entry/${this._accession}`;
+    // const content = this.innerHTML;
+    // this.innerHTML ="";
+
     shadowDom.innerHTML = `
       <style>
         .link {
@@ -160,7 +163,9 @@ class InterproEntry extends HTMLElement {
            </span>
           
         </div>
-        <div class="children">${this.innerHTML}</div>
+        <div class="children">
+             <slot></slot>
+        </div>
       </div>
       
     `.trim();
