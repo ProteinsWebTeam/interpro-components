@@ -73,15 +73,18 @@ class InterproEntry extends HTMLElement {
     const shadowDom = this.shadyRoot || this.shadowRoot;
     const link =
       this._href || `https://www.ebi.ac.uk/interpro/entry/${this._accession}`;
+    // const content = this.innerHTML;
+    // this.innerHTML ="";
+
     shadowDom.innerHTML = `
       <style>
         .link {
           text-decoration: underline;
-          color: midnightblue;
+          color: #0070bb;
           cursor: pointer;
         }
         .link:hover {
-          color: royalblue;
+          color: #2199e8;
         }
         .children {
           /*animation: fade 0.5s;*/
@@ -101,21 +104,17 @@ class InterproEntry extends HTMLElement {
           transition-duration: 0s;
         }
         .entry {
-          background-color: #e0e0f0;
           position: relative;
           padding: 6px 10px;
           margin-bottom: 2px;
           line-height: 1;
+          display: inline-block;
         }
         .action-holder {
-          position: absolute;
-          width: 2em; 
+          display: inline-block;
+          width: 1em; 
           height: 1em; 
-          border-radius: 0.3em;
-          left: 3.5em;
           border: 0;
-          background-color: white;
-          z-index: 2;
           visibility: hidden;
           color: #055d97;
         }
@@ -126,24 +125,30 @@ class InterproEntry extends HTMLElement {
         .action-holder:after {
           content: '';
           font-weight: bold;
-          width: 2em;
+          width: 1em;
           text-align: center;
           position: absolute;
           cursor: pointer;
         }
         .has-children, .expander {
           visibility: visible;
+          width: 1em;
         }
         .has-children::after {
-          content: '-';
+          content: '▾';
         }
         .expander::after {
           content: '…';
         }
-        :host(.hidden) .has-children::after {content: '+';}
+        :host(.hidden) .has-children::after {content: '▸';}
       </style>
-      <div style="display: inline-block; white-space: nowrap;">
+      <div style="display: block; white-space: nowrap;">
         <div class="entry"  style="margin-left: ${this._level}rem;">
+            <div class="action-holder 
+                  ${this._haschildren ? 'has-children' : ''}
+                  ${this._includeexpander ? 'expander' : ''}
+                  " 
+             ></div>
           <interpro-type type="${this._type}"></interpro-type> 
           <span 
               style="
@@ -157,16 +162,11 @@ class InterproEntry extends HTMLElement {
                </a> (${this._accession})
            </span>
           
-            <div 
-                class="
-                    action-holder 
-                    ${this._haschildren ? 'has-children' : ''}
-                    ${this._includeexpander ? 'expander' : ''}
-                    " 
-             ></div>
+        </div>
+        <div class="children">
+             <slot></slot>
         </div>
       </div>
-      <div class="children">${this.innerHTML}</div>
       
     `.trim();
     this.shadowRoot
