@@ -79,48 +79,34 @@ class InterproEntry extends HTMLElement {
     shadowDom.innerHTML = `
       <style>
         .link {
-          text-decoration: underline;
+          text-decoration: none;
           color: #0070bb;
-          cursor: pointer;
         }
         .link:hover {
           color: #2199e8;
         }
-        .children {
-          /*animation: fade 0.5s;*/
-          transform-origin: top right;
-          transform: scaleY(1);
-          /*height: 100%;*/
-          opacity: 1;
-          transition-property: opacity, transform, max-height;
-          transition-timing-function: ease;
-          transition-duration: 0.2s;
+        .entry-rel {
+          position:relative;
+          line-height: 1.6;
+          display: flex;         
         }
-        :host(.hidden) .children {
-          transform-origin: top right;
-          transform: scaleY(0.1);
-          opacity: 0;
-          max-height: 0;
-          transition-duration: 0s;
-        }
-        .entry {
-          position: relative;
-          padding: 6px 10px;
-          margin-bottom: 2px;
-          line-height: 1;
-          display: inline-block;
-        }
-        .action-holder {
-          display: inline-block;
+        .entry-rel small {
+          font-size: 80%;
+          color: #999;
+          }
+        .entry-rel .active {font-weight:bold;}
+        .entry-rel .active small {font-size:100%; color: #222;}
+        interpro-type {margin-right:0.5rem;}
+        .action-holder {      
           width: 1em; 
           height: 1em; 
-          border: 0;
           visibility: hidden;
-          color: #055d97;
+          color: #999;
+          margin-right:0.5rem;
+          /*color: #222; #055d97*/
         }
         .action-holder:hover {
           color: #058db7;            
-          background-color: lightyellow;
         }
         .action-holder:after {
           content: '';
@@ -129,10 +115,12 @@ class InterproEntry extends HTMLElement {
           text-align: center;
           position: absolute;
           cursor: pointer;
+          font-size: 130%;
+          top:-0.3em;
         }
         .has-children, .expander {
           visibility: visible;
-          width: 1em;
+          /*width: 1em;*/
         }
         .has-children::after {
           content: '▾';
@@ -140,26 +128,23 @@ class InterproEntry extends HTMLElement {
         .expander::after {
           content: '…';
         }
-        :host(.hidden) .has-children::after {content: '▸';}
+        :host(.tree-hidden) .has-children::after {content: '▸';}
       </style>
-      <div style="display: block; white-space: nowrap;">
-        <div class="entry"  style="margin-left: ${this._level}rem;">
+      <div style="display: block; /*Firefox*/">
+        <div class="entry-rel"  style="margin-left: ${this._level}rem;">
             <div class="action-holder 
                   ${this._haschildren ? 'has-children' : ''}
                   ${this._includeexpander ? 'expander' : ''}
                   " 
              ></div>
-          <interpro-type type="${this._type}"></interpro-type> 
-          <span 
-              style="
-                font-family: 'Helvetica Neue', Verdana, sans-serif;
-                font-weight: ${this._selected ? 'bold' : 'normal'}
-          ">
+          <interpro-type type="${this._type}" size="1.2em"></interpro-type> 
+          <span class=" ${this._selected ? 'active' : 'normal'}"
+          >
               <a class="${this._selected ? '' : 'link'}" ${this._selected
       ? ''
       : `href="${link}"`}>
                    ${this._name}
-               </a> (${this._accession})
+               </a> <small>(${this._accession})</small>
            </span>
           
         </div>
@@ -190,7 +175,7 @@ class InterproEntry extends HTMLElement {
   }
 
   _planUpdate() {
-    this.classList.toggle('hidden');
+    this.classList.toggle('tree-hidden');
   }
 
   // Getters/Setters
