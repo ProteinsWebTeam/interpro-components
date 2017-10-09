@@ -92,10 +92,10 @@ class InterproEntry extends HTMLElement {
         }
         .entry-rel small {
           font-size: 80%;
-          color: #999;
+          color: #4b555b;
           }
-        .entry-rel .active {font-weight:bold;}
-        .entry-rel .active small {font-size:100%; color: #222;}
+        .entry-rel .active {font-weight:bold; color: #4b555b}
+        .entry-rel .active small {font-size:100%; color: #4b555b}
         interpro-type {margin-right:0.5rem;}
         .action-holder {      
           width: 1em; 
