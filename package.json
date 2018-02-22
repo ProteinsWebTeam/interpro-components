@@ -38,7 +38,7 @@
   "scripts": {
     "bundle": "webpack",
     "prebuild": "npm run test",
-    "build": "rimraf dist && npm run bundle -- --env.prod",
+    "build": "rimraf dist && npm run bundle -- --env.production",
     "start": "webpack-dev-server",
     "test": "npm run test:lint",
     "test:lint": "eslint --ignore-path .gitignore \"./**/*.js\"",
@@ -58,6 +58,7 @@
     "lint-staged": "7.0.0",
     "prettier": "1.10.2",
     "rimraf": "2.6.2",
+    "uglifyjs-webpack-plugin": "1.2.0",
     "webpack": "3.11.0",
     "webpack-dev-server": "2.11.1"
   },

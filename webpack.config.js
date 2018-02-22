@@ -32,12 +32,11 @@ module.exports = (env = { dev: true }) => ({
   // },
   plugins: [
     env.dev ? null : new webpack.optimize.ModuleConcatenationPlugin(),
-    // env.dev
-    //   ? null
-    //   : new webpack.optimize.UglifyJsPlugin({
-    //     parallel: true,
-    //     sourceMap: true,
-    //   }),
+    env.production
+      ? new (require('uglifyjs-webpack-plugin'))({
+          sourceMap: true,
+        })
+      : null,
     env.dev ? new webpack.HotModuleReplacementPlugin() : null,
     env.dev
       ? new HtmlWebpackPlugin({
