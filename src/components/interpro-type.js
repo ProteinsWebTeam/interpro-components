@@ -1,3 +1,5 @@
+import { html, svg, render } from 'lit-html';
+
 const supportedTypes = new Map([
   [
     'family',
@@ -104,6 +106,53 @@ const supportedTypes = new Map([
   ],
 ]);
 
+const svgTemplate = (fillColor, small) => svg`
+  <rect
+    x="0" y="0"
+    width="60" height="60"          
+    fill="${fillColor}"
+  />
+  <text
+    x="50%" y="50%"
+    text-anchor="middle"
+    dx="0" dy="18px"
+    style="
+      fill: white;
+      font-size: 50px;
+      font-weight: 700;
+      font-family: 'Montserrat', 'arial', 'serif';
+    "
+  >
+    ${small}
+  </text>
+`;
+
+const typeTemplate = (
+  size,
+  expanded,
+  small,
+  full,
+  fillColor,
+  textColor,
+) => html`
+  <style>
+    .svg-container {
+      display: inline-flex;
+      align-items:center;
+    }      
+  </style>
+  <span class="svg-container">
+    <svg viewBox="0 0 60 60" width="${size}" height="${size}">
+      ${svgTemplate(fillColor, small)}
+    </svg>
+    ${
+      expanded
+        ? html`<span style="color: ${textColor};">&nbsp;${full}</span>`
+        : ''
+    }
+  </span>
+`;
+
 class InterproType extends HTMLElement {
   static get is() {
     return 'interpro-type';
@@ -126,50 +175,17 @@ class InterproType extends HTMLElement {
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
     }
-    (this.shadyRoot || this.shadowRoot).innerHTML = `
-      <style>
-        .svg-container {
-          display: inline-flex;
-          align-items:center;
-        }      
-      </style>
-      <span class="svg-container">
-        <svg viewBox="0 0 60 60" width="${this._size}" height="${this._size}">
-               
-          <rect
-            x="0" y="0"
-            width="60" height="60"          
-            fill="${this._type.colors[0]}"
-          />
-        
-          <text
-            x="50%" y="50%"
-            text-anchor="middle"
-            dx="0" dy="18px"
-            style="
-              fill: white;
-              font-size: 50px;
-              font-weight: 700;
-              font-family: 'Montserrat', 'arial', 'serif';
-            "
-          >
-            ${this._type.small}
-          </text>
-          
-            ${this._type.small}
-          </text>
-        </svg>
-        ${this.expanded
-          ? `
-            <span
-              style="color: ${this._type.colors[1]};"
-            >
-              &nbsp;${this._type.full}
-            </span>
-          `
-          : ''}
-      </span>
-    `.trim();
+    render(
+      typeTemplate(
+        this._size,
+        this.expanded,
+        this._type.small,
+        this._type.full,
+        this._type.colors[0],
+        this._type.colors[1],
+      ),
+      this.shadyRoot || this.shadowRoot,
+    );
   }
 
   // Getters/Setters
@@ -192,6 +208,7 @@ class InterproType extends HTMLElement {
     this._type = Object.assign({ type: _value }, descriptor);
     // mirror attribute
     this.setAttribute('type', _value);
+    this.setAttribute('aria-label', `InterPro type: ${_value}`);
     this._render();
   }
 

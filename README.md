@@ -6,22 +6,22 @@ InterPro web components
 A standard web component (v1) implementation of InterPro components.
 
 Note: As the InterPro API is not released yet, the
-`interpro-data-loader` component is not functional. In the meantime,
-the rest of visual components is still usable passing data to their
-attributes and/or properties.
+`interpro-data-loader` component is using a development version of the API, and
+for this reason it might unexpectedly break. The rest of visual components is
+still usable passing data to their attributes and/or properties.
 
 ## Usage
 
 ### Examples
 ```html
 <interpro-type>
-  <interpro-data-loader entryid="IPR011528">
+  <interpro-data-loader accession="IPR011528">
 </interpro-type>
 ```
 
 ```html
 <interpro-type expanded>
- <interpro-data-loader entryid="IPR011528">
+ <interpro-data-loader accession="IPR011528">
 </interpro-type>
 ```
 
@@ -31,7 +31,7 @@ Only needed if `interpro-type` or `interpro-data-loader` names clash with an
 other existing Custom Element.
 
 ```js
-import {InterproDataLoader, InterproType} from 'interpro-components';
+import { InterproDataLoader, InterproType } from 'interpro-components';
 
 // If `data-loader` elements also namespaced, need to pass
 // new name to InterproDataLoader to use it correctly
@@ -46,7 +46,7 @@ And then in the HTML, use like so:
 
 ```html
 <namespaced-interpro-type>
-  <namespaced-interpro-data-loader pdbid="1cbs">
+  <namespaced-interpro-data-loader accession="IPR011528">
 </namespaced-interpro-type>
 ```
 
@@ -64,12 +64,12 @@ See [webcomponents.js](https://github.com/webcomponents/webcomponentsjs).
 
 ### `interpro-data-loader`
 
-_not working yet, see note at the top_
+_using development endpoint, see note at the top_
 
-Not a visible element. Use to retrieve data from the PDB API.
+Not a visible element. Use to retrieve data from the InterPro API.
 
 Generates a `data-loader` element with the correct `source` element to
-get data from the PDB API for the PDB entry specified.
+get data from the InterPro API for the specified InterPro entry.
 
 ### `interpro-type`
 
@@ -98,13 +98,13 @@ It supports nested entries, displaying them as a subtree.
 
 |name|default value|accepted values|information|DOM attribute|writable|
 |----|-------------|---------------|-----------|-------------|--------|
-|`entryid`|`null`|valid entry ID|string corresponding to an existing entry ID|yes|yes|
+|`accession`|`null`|valid entry ID|string corresponding to an existing entry ID|yes|yes|
 
 #### Events
 
 none, but the `data-loader` component generated as its child will
 dispatch bubbling events
-(see [data-loader](https://github.com/aurel-l/data-loader))
+(see [data-loader](https://github.com/ebi-webcomponents/data-loader))
 
 #### CSS custom properties
 
@@ -152,14 +152,15 @@ none
 1. Get the code via git clone:
 
    ```$ git clone https://github.com/ProteinsWebTeam/interpro-components.git```
+   
 2. Install dependencies via npm:
 
    ```interpro-components$ npm install```
-3. Start the app. This includes re-bundling, and starts live-reload, so it refresh the page when the code changes.
+   
+3. Start the app. This includes re-bundling, and starts live-reload, so it
+refresh the page when the JavaScript code changes.
 
    ```interpro-components$ npm run start```
-4. Serve the folder. You can use a local install of apache or nginx, or alternatively just serve the local folder with a tool such as [http-server](https://www.npmjs.com/package/http-server)
 
-   ```interpro-components$ http-server```
-
-5. Check the test page in your server. e.g. http://localhost:8080/test/
+4. Check the test page in your server. e.g. http://localhost:8080/ (or whatever
+address is displayed when running step 3)

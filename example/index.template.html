@@ -43,7 +43,7 @@
       <interpro-type>
         <data-loader>
           <source
-              src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011528"
+            src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR011528"
           >
         </data-loader>
       </interpro-type>
@@ -51,11 +51,7 @@
     <div>
       Expanded, from network:
       <interpro-type expanded>
-        <data-loader>
-          <source
-              src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011528"
-          >
-        </data-loader>
+        <interpro-data-loader accession="IPR011528"></interpro-data-loader>
       </interpro-type>
     </div>
   </div>
@@ -81,7 +77,8 @@
       Simple Hierarchy:<interpro-entry accession="IPR024950" type="family" name="Dual specificity phosphatase" href="http://www.ebi.ac.uk/interpro/entry/IPR024950" >
         <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase" selected>
           <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
-          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>        </interpro-entry>
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+        </interpro-entry>
         <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase" level="2">
           <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
           <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily B">
@@ -93,39 +90,35 @@
     <li>
       Simple from network:
       <interpro-entry>
-        <data-loader>
-          <source src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011528">
-        </data-loader>
+        <interpro-data-loader accession="IPR011528"></interpro-data-loader>
       </interpro-entry>
     </li>
     <li>
       Simple from network (Selected):
       <interpro-entry selected>
-        <data-loader>
-          <source src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR011520">
-        </data-loader>
+        <interpro-data-loader accession="IPR011520"></interpro-data-loader>
       </interpro-entry>
     </li>
   </ul>
   <h1>Interpro Hierarchy</h1>
   <ul>
     <li>From network<br/>
-      <interpro-hierarchy accession="IPR000001">
+      <interpro-hierarchy accession="IPR003074">
         <data-loader selector="metadata.hierarchy">
-          <source src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR000001">
+          <source src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR003074">
         </data-loader>
       </interpro-hierarchy>
     </li>
     <li>From network - pruned:
       <interpro-hierarchy accession="IPR003074" displaymode="pruned">
         <data-loader selector="metadata.hierarchy">
-          <source src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR003074">
+          <source src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR003074">
         </data-loader>
       </interpro-hierarchy>
     </li>
     <li>From network - showing up to 2 children:<interpro-hierarchy accession="IPR024178" hideafter="2" hrefroot="http://localhost:8000/interpro/entry/interpro/">
         <data-loader selector="metadata.hierarchy">
-          <source src="http://hmmer-prod-db03:8000/api/entry/interpro/IPR024178">
+          <source src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR024178">
         </data-loader>
       </interpro-hierarchy>
     </li>

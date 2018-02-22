@@ -1,7 +1,8 @@
-const entryIdPattern = /^[A-Z0-9]{3,}$/;
+const accessionPattern = /^IPR\d{6}$/;
 
-const idToUrl = (url => id => `${url}${id}`)(
-  '//www.example.com/'.trim().replace('\n', ''),
+const accessionToUrl = (url => accession =>
+  url.replace('{accession}', accession))(
+  'https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/{accession}/',
 );
 
 class InterproDataLoader extends HTMLElement {
@@ -10,11 +11,15 @@ class InterproDataLoader extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['entryid'];
+    return ['accession'];
+  }
+
+  static get dataLoaderElementName() {
+    return 'data-loader';
   }
 
   _render() {
-    const id = this.entryid;
+    const id = this.accession;
     // Clean up the DOM
     const sources = this.querySelectorAll('source');
     for (const source of sources) {
@@ -24,7 +29,7 @@ class InterproDataLoader extends HTMLElement {
     if (!id) return;
     // We have an ID, add or modify a data-loader element to fetch the data
     const source = document.createElement('source');
-    source.src = idToUrl(id);
+    source.src = accessionToUrl(id);
     let dataLoader = this.querySelector(
       InterproDataLoader.dataLoaderElementName,
     );
@@ -52,21 +57,21 @@ class InterproDataLoader extends HTMLElement {
 
   // Getters/Setters
   // entryid
-  get entryid() {
-    return this._entryid;
+  get accession() {
+    return this._accession;
   }
 
-  set entryid(value) {
+  set accession(value) {
     const _value = (value || '').trim().toUpperCase();
-    if (_value && !entryIdPattern.test(_value)) {
-      throw new Error(`${value} is not a valid entry ID`);
+    if (_value && !accessionPattern.test(_value)) {
+      throw new Error(`${value} is not a valid entry accession`);
     }
-    this._entryid = _value || null;
-    if (this._entryid) {
-      this.setAttribute('entryid', this.pdbid);
+    this._accession = _value || null;
+    if (this._accession) {
+      this.setAttribute('accession', this.accession);
       this._planRender();
     } else {
-      this.removeAttribute('entryid');
+      this.removeAttribute('accession');
     }
   }
 
@@ -74,7 +79,7 @@ class InterproDataLoader extends HTMLElement {
   constructor() {
     super();
     // set defaults
-    this._entryid = null;
+    this._accession = null;
   }
 
   connectedCallback() {
@@ -90,6 +95,5 @@ class InterproDataLoader extends HTMLElement {
     this[attributeName] = newValue;
   }
 }
-InterproDataLoader.dataLoaderElementName = 'data-loader';
 
 export default InterproDataLoader;
