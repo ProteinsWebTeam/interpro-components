@@ -22,7 +22,7 @@ const supportedTypes = new Map([
       small: 'H',
       // color: '#304CE3',
       color: '#6caed4',
-      colors: ['#6caed4', '#405CF3', '#304CE3'],
+      colors: ['#6caed4', '#5093ba', '#304CE3'],
     },
   ],
   [
@@ -145,11 +145,9 @@ const typeTemplate = (
     <svg viewBox="0 0 60 60" width="${size}" height="${size}">
       ${svgTemplate(fillColor, small)}
     </svg>
-    ${
-      expanded
-        ? html`<span style="color: ${textColor};">&nbsp;${full}</span>`
-        : ''
-    }
+    ${expanded
+      ? html`<span style="color: ${textColor};">&nbsp;${full}</span>`
+      : ''}
   </span>
 `;
 
