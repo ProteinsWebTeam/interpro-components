@@ -22,7 +22,7 @@ const supportedTypes = new Map([
       small: 'H',
       // color: '#304CE3',
       color: '#6caed4',
-      colors: ['#6caed4', '#405CF3', '#304CE3'],
+      colors: ['#6caed4', '#5093ba', '#304CE3'],
     },
   ],
   [
