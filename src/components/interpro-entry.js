@@ -137,12 +137,14 @@ class InterproEntry extends HTMLElement {
                   ${this._includeexpander ? 'expander' : ''}
                   " 
              ></div>
-          <interpro-type type="${this._type}" size="1.2em"></interpro-type> 
+          <interpro-type type="${
+            this._type
+          }" dimension="1.2em"></interpro-type> 
           <span class=" ${this._selected ? 'active' : 'normal'}"
           >
-              <a class="${this._selected ? '' : 'link'}" ${this._selected
-      ? ''
-      : `href="${link}"`}>
+              <a class="${this._selected ? '' : 'link'}" ${
+      this._selected ? '' : `href="${link}"`
+    }>
                    ${this._name}
                </a> <small>(${this._accession})</small>
            </span>

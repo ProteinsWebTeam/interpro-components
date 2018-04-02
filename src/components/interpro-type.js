@@ -128,7 +128,7 @@ const svgTemplate = (fillColor, small) => svg`
 `;
 
 const typeTemplate = (
-  size,
+  dimension,
   expanded,
   small,
   full,
@@ -142,7 +142,7 @@ const typeTemplate = (
     }      
   </style>
   <span class="svg-container">
-    <svg viewBox="0 0 60 60" width="${size}" height="${size}">
+    <svg viewBox="0 0 60 60" width="${dimension}" height="${dimension}">
       ${svgTemplate(fillColor, small)}
     </svg>
     ${
@@ -159,7 +159,7 @@ class InterproType extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['type', 'size', 'expanded'];
+    return ['type', 'dimension', 'expanded'];
   }
 
   _handleLoadEvent(event) {
@@ -177,7 +177,7 @@ class InterproType extends HTMLElement {
     }
     render(
       typeTemplate(
-        this._size,
+        this._dimension,
         this.expanded,
         this._type.small,
         this._type.full,
@@ -233,18 +233,18 @@ class InterproType extends HTMLElement {
     this._render();
   }
 
-  // size
-  get size() {
-    return this._size;
+  // dimension
+  get dimension() {
+    return this._dimension;
   }
 
-  set size(value) {
+  set dimension(value) {
     // bail if same parsed value
-    if (value === this._size) return;
+    if (value === this._dimension) return;
     // store new value
-    this._size = value;
+    this._dimension = value;
     // mirror attribute
-    this.setAttribute('size', value);
+    if (value) this.setAttribute('dimension', value);
     this._render();
   }
 
@@ -254,7 +254,8 @@ class InterproType extends HTMLElement {
     // set defaults
     this._type = supportedTypes.get('unknown');
     this._expanded = false;
-    this._size = this.getAttribute('size') || getComputedStyle(this).lineHeight;
+    this._dimension =
+      this.getAttribute('dimension') || getComputedStyle(this).lineHeight;
     this._handleLoadEvent = this._handleLoadEvent.bind(this);
     this._render = this._render.bind(this);
   }

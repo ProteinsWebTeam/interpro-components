@@ -117,6 +117,7 @@ none
 |name|default value|accepted values|information|DOM attribute|writable|
 |----|-------------|---------------|-----------|-------------|--------|
 |`type`|`'undefined'`|any of 'family', 'domain', 'repeat', 'site', 'active site', 'binding site', 'conserved site', 'ptm', or 'undefined'|corresponds to an entry type|yes|yes|
+|`dimension`|computed lineHeight|string|any size valid in CSS|yes|yes|
 |`expanded`|`false`|boolean|expanded view of the component|yes|yes|
 
 #### Events
