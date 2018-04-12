@@ -255,7 +255,9 @@ class InterproType extends HTMLElement {
     this._type = supportedTypes.get('unknown');
     this._expanded = false;
     this._dimension =
-      this.getAttribute('dimension') || getComputedStyle(this).lineHeight;
+      this.getAttribute('dimension') ||
+      getComputedStyle(this).lineHeight ||
+      '0';
     this._handleLoadEvent = this._handleLoadEvent.bind(this);
     this._render = this._render.bind(this);
   }
