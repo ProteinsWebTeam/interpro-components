@@ -146,7 +146,7 @@ class InterproEntry extends HTMLElement {
       this._selected ? '' : `href="${link}"`
     }>
                    ${this._name}
-               </a> <small>(${this._accession})</small>
+               </a> <small>(${this._accession.toUpperCase()})</small>
            </span>
           
         </div>
