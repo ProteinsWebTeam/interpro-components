@@ -19,7 +19,9 @@ class InterproHierarchy extends HTMLElement {
   _pruneTreeMarking(node) {
     const { children, accession } = node;
     node.pruned = true;
-    if (this._accessions.find(e => e === accession)) {
+    if (
+      this._accessions.find(e => e.toLowerCase() === accession.toLowerCase())
+    ) {
       node.pruned = false;
     }
     if (children) {
@@ -31,23 +33,25 @@ class InterproHierarchy extends HTMLElement {
   }
 
   _pruneTreePruning(node) {
-    const { children, accession, name, type } = node;
+    const { accession, name, type } = node;
     const n = { accession, name, type };
     if (!node.pruned) {
-      if (children) {
-        for (const child of children) {
-          const survivor = this._pruneTreePruning(child);
-          if (survivor) {
-            if (!n['children']) n['children'] = [];
-            n['children'].push(survivor);
-          } else if (!this._displaymode.includes('no-children')) {
-            if (!n['children']) n['children'] = [];
-            n['children'].push({
-              accession: child.accession,
-              name: child.name,
-              type: child.type,
-            });
-          }
+      if (node.children) {
+        // node._children = node.children.filter(ch => ch.pruned);
+        n.children = [];
+        for (const child of node.children.filter(ch => !ch.pruned)) {
+          n.children.push(this._pruneTreePruning(child));
+          // if (survivor) {
+          //   // if (!n['children']) n['children'] = [];
+          //   n['children'].push(survivor);
+          // } else if (!this._displaymode.includes('no-children')) {
+          //   // if (!n['children']) n['children'] = [];
+          //   n['children'].push({
+          //     accession: child.accession,
+          //     name: child.name,
+          //     type: child.type,
+          //   });
+          // }
         }
       }
       return n;
@@ -86,22 +90,26 @@ class InterproHierarchy extends HTMLElement {
         name="${hierarchy.name}" ${selected}
         ${hide ? 'hidden' : ''}
         ${includeExpander ? 'includeexpander' : ''}
-        ${this._hrefroot
-          ? `href="${this._hrefroot}/${hierarchy.accession}"`
-          : ''}
+        ${
+          this._hrefroot
+            ? `href="${this._hrefroot}/${hierarchy.accession}"`
+            : ''
+        }
       >
-        ${hierarchy.children
-          ? hierarchy.children
-              .map((child, i) =>
-                this._json2HTML(
-                  child,
-                  i >= this._hideafter,
-                  i + 1 === this._hideafter &&
-                    hierarchy.children.length > i + 1,
-                ),
-              )
-              .join('')
-          : ''} 
+        ${
+          hierarchy.children
+            ? hierarchy.children
+                .map((child, i) =>
+                  this._json2HTML(
+                    child,
+                    i >= this._hideafter,
+                    i + 1 === this._hideafter &&
+                      hierarchy.children.length > i + 1,
+                  ),
+                )
+                .join('')
+            : ''
+        } 
       </interpro-entry>
     `;
   }
