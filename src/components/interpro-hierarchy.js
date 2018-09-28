@@ -19,14 +19,23 @@ class InterproHierarchy extends HTMLElement {
   _pruneTreeMarking(node) {
     const { children, accession } = node;
     node.pruned = true;
+    let isCurrentNode = false;
     if (
       this._accessions.find(e => e.toLowerCase() === accession.toLowerCase())
     ) {
       node.pruned = false;
+      isCurrentNode = true;
     }
     if (children) {
       for (const child of children) {
         if (!this._pruneTreeMarking(child)) node.pruned = false;
+      }
+      if (
+        isCurrentNode &&
+        !this._displaymode.includes('no-children') &&
+        !node.pruned
+      ) {
+        node.children.forEach(ch => (ch.pruned = false));
       }
     }
     return node.pruned;

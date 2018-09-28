@@ -10,11 +10,145 @@
   </style>
 </head>
 <body>
+  <h1>Interpro Type</h1>
+  <div>
+    <div>
+      Small, hardcoded:
+      <interpro-type type="family" dimension="50px">Family</interpro-type>
+      <interpro-type type="homologous superfamily" dimension="2em">Homologous Superfamily</interpro-type>
+      <interpro-type type="domain" dimension="1.5em">Domain</interpro-type>
+      <interpro-type type="repeat" dimension="3rem">Repeat</interpro-type>
+      <interpro-type type="site" dimension="5vw">Site</interpro-type>
+      <interpro-type type="active site">Active Site</interpro-type>
+      <interpro-type type="binding site">Binding Site</interpro-type>
+      <interpro-type type="conserved site">Conserved Site</interpro-type>
+      <interpro-type type="ptm">Posttranslational Modification</interpro-type>
+      <interpro-type type="unknown">Unknown</interpro-type>
+    </div>
+    <div>
+      Expanded, hardcoded:
+      <interpro-type type="family" dimension="3rem" expanded>Family</interpro-type>
+      <interpro-type type="homologous superfamily" expanded>Homologous Superfamily</interpro-type>
+      <interpro-type type="domain" expanded>Domain</interpro-type>
+      <interpro-type type="repeat" expanded>Repeat</interpro-type>
+      <interpro-type type="site" expanded>Site</interpro-type>
+      <interpro-type type="active site" expanded>Active Site</interpro-type>
+      <interpro-type type="binding site" expanded>Binding Site</interpro-type>
+      <interpro-type type="conserved site" expanded>Conserved Site</interpro-type>
+      <interpro-type type="ptm" expanded>Posttranslational Modification</interpro-type>
+      <interpro-type type="unknown" expanded>Unknown</interpro-type>
+    </div>
+    <div>
+      Small, from network:
+      <interpro-type>
+        <data-loader>
+          <source
+            src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR011528"
+          >
+        </data-loader>
+      </interpro-type>
+    </div>
+    <div>
+      Expanded, from network:
+      <interpro-type expanded>
+        <interpro-data-loader accession="IPR011528"></interpro-data-loader>
+      </interpro-type>
+    </div>
+  </div>
+  <h1>Interpro Entry</h1>
   <ul>
-    <li>From network - pruned:
-      <interpro-hierarchy accessions="ipr003075" displaymode="pruned">
+    <li>
+      Single entry:
+      <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+    </li>
+    <li>
+      Single entry (selected):
+      <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A" selected></interpro-entry>
+    </li>
+    <li>
+      Simple hierarchy:<br/>
+      <interpro-entry accession="IPR024950" type="family" name="Dual specificity phosphatase">
+        <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase">
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+        </interpro-entry>
+      </interpro-entry>
+    </li>
+    <li>
+      Simple Hierarchy:<interpro-entry accession="IPR024950" type="family" name="Dual specificity phosphatase" href="http://www.ebi.ac.uk/interpro/entry/IPR024950" >
+        <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase" selected>
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+        </interpro-entry>
+        <interpro-entry accession="IPR020417" type="family" name="Atypical dual specificity phosphatase" level="2">
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily A"></interpro-entry>
+          <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily B">
+            <interpro-entry accession="IPR020405" type="family" name="Atypical dual specificity phosphatase, subfamily C"></interpro-entry>
+          </interpro-entry>
+        </interpro-entry>
+      </interpro-entry>
+    </li>
+    <li>
+      Simple from network:
+      <interpro-entry>
+        <interpro-data-loader accession="IPR011528"></interpro-data-loader>
+      </interpro-entry>
+    </li>
+    <li>
+      Simple from network (Selected):
+      <interpro-entry selected>
+        <interpro-data-loader accession="IPR011520"></interpro-data-loader>
+      </interpro-entry>
+    </li>
+  </ul>
+  <h1>Interpro Hierarchy</h1>
+  <ul>
+    <li>From network<br/>
+      <interpro-hierarchy accession="IPR003074">
         <data-loader selector="metadata.hierarchy">
           <source src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR003074">
+        </data-loader>
+      </interpro-hierarchy>
+    </li>
+    <li>From network - pruned:
+      <interpro-hierarchy accession="ipr003074" displaymode="pruned">
+        <data-loader selector="metadata.hierarchy">
+          <source src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR003074">
+        </data-loader>
+      </interpro-hierarchy>
+    </li>
+    <li>From network - showing up to 2 children:<interpro-hierarchy accession="IPR024178" hideafter="2" hrefroot="http://localhost:8000/interpro/entry/interpro/">
+        <data-loader selector="metadata.hierarchy">
+          <source src="https://wwwdev.ebi.ac.uk/interpro7/api/entry/InterPro/IPR024178">
+        </data-loader>
+      </interpro-hierarchy>
+    </li>
+    <li>From dataloader json<br/>
+      <interpro-hierarchy>
+        <data-loader>
+          <script type="application/json">
+            {
+              "accession": "IPR024178",
+              "name": "Oestrogen receptor/oestrogen-related receptor",
+              "type": "Family",
+              "children": [
+                {
+                  "accession": "IPR001292",
+                  "name": "Oestrogen receptor",
+                  "type": "Family"
+                },
+                {
+                  "accession": "ipr028355",
+                  "name": "Estrogen receptor beta/gamma",
+                  "type": "Family"
+                },
+                {
+                  "accession": "IPR027289",
+                  "name": "Oestrogen-related receptor",
+                  "type": "Family"
+                }
+              ]
+            }
+          </script>
         </data-loader>
       </interpro-hierarchy>
     </li>
