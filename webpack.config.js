@@ -4,54 +4,139 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = (env = { dev: true }) => ({
-  entry: env.dev
-    ? path.resolve(__dirname, 'example', 'index.js')
-    : path.resolve(__dirname, 'src', 'index.js'),
+module.exports = (env = { production: false }) => ({
+  mode: env.production ? 'production' : 'development',
+  entry: [
+    'core-js/modules/es.promise',
+    'core-js/modules/es.array.iterator',
+    env.production
+      ? path.resolve(__dirname, 'src', 'index.js')
+      : path.resolve(__dirname, 'example', 'index.js'),
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: env.dev ? '[id].[name].[hash].js' : 'index.js',
+    filename: env.production ? 'index.js' : '[id].[name].[hash].js',
   },
   resolve: {
     modules: [path.resolve('.', 'src'), path.resolve('.', 'node_modules')],
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.js$/i,
-  //       include: [
-  //         path.resolve('src'),
-  //       ],
-  //       use: [
-  //         {
-  //           loader: 'babel-loader',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+  module: {
+    rules: [
+      {
+        test: /\.js$/i,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            [
+              '@babel/env',
+              {
+                modules: false,
+                loose: true,
+                useBuiltIns: 'usage',
+                corejs: 3,
+                targets: module ? { esmodules: true } : { browsers: '> 0.25%' },
+              },
+            ],
+          ],
+          plugins: [
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/transform-runtime',
+          ],
+        },
+      },
+    ],
+  },
   plugins: [
-    env.dev ? null : new webpack.optimize.ModuleConcatenationPlugin(),
+    env.production ? null : new webpack.HotModuleReplacementPlugin(),
     env.production
-      ? new (require('uglifyjs-webpack-plugin'))({
-          sourceMap: true,
-        })
-      : null,
-    env.dev ? new webpack.HotModuleReplacementPlugin() : null,
-    env.dev
-      ? new HtmlWebpackPlugin({
+      ? null
+      : new HtmlWebpackPlugin({
           template: path.join(__dirname, 'example', 'index.template.html'),
-        })
-      : null,
+        }),
   ].filter(Boolean),
-  devtool: env.dev ? 'inline-source-map' : 'source-map',
-  devServer: env.dev
-    ? {
+  devtool: env.production ? 'source-map' : 'inline-source-map',
+  devServer: env.production
+    ? undefined
+    : {
         overlay: true,
         hot: true,
         watchOptions: {
           ignored: /node_modules/,
         },
-      }
-    : undefined,
+      },
 });
+// module.exports = (env = { production: false }) => ({
+//   mode: env.production ?  'production' : 'development',
+//   entry: [
+//     "core-js/modules/es.promise",
+//     "core-js/modules/es.array.iterator",
+//     env.production
+//     ? path.resolve(__dirname, 'src', 'index.js')
+//     : path.resolve(__dirname, 'example', 'index.js')
+//   ],
+//   output: {
+//     path: path.resolve(__dirname, 'dist'),
+//     filename: env.production ? '[id].[name].[hash].js' : 'index.js',
+//   },
+//   resolve: {
+//     modules: [path.resolve('.', 'src'), path.resolve('.', 'node_modules')],
+//   },
+//   module: {
+//     rules: [
+//       { test: /\.js$/i, exclude: /node_modules/, loader: "babel-loader",
+//         options: {
+//           presets: [
+//             [
+//               '@babel/env',
+//               {
+//                 modules: false,
+//                 loose: true,
+//                 useBuiltIns: 'usage',
+//                 corejs: 3,
+//                 targets: (module)
+//                   ? { esmodules: true }
+//                   : { browsers: '> 0.25%' },
+//               },
+//             ],
+//           ],
+//           plugins: [
+//             '@babel/plugin-syntax-dynamic-import',
+//           ],
+//         }
+//       }
+//     ]
+//   },
+//   plugins: [
+//     env.production ? new webpack.optimize.ModuleConcatenationPlugin() : null,
+//     // env.production
+//     //   ? new (require('uglifyjs-webpack-plugin'))({
+//     //       sourceMap: true,
+//     //     })
+//     //   : null,
+//     env.production ? null : new webpack.HotModuleReplacementPlugin(),
+//     env.production
+//       ? null
+//       : new HtmlWebpackPlugin({
+//           template: path.join(__dirname, 'example', 'index.template.html'),
+//         }),
+//   ].filter(Boolean),
+//   devtool: env.production ? 'source-map' : 'inline-source-map',
+//   devServer: env.production
+//     ? undefined
+//     : {
+//         overlay: true,
+//         hot: true,
+//         watchOptions: {
+//           ignored: /node_modules/,
+//         },
+//       },
+//
+//   // optimization: {
+//   //   minimizer: [
+//   //     new (require('uglifyjs-webpack-plugin'))({
+//   //       exclude: /\/excludes/,
+//   //     }),
+//   //   ],
+//   // },
+// });

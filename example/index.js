@@ -1,6 +1,8 @@
 const getPolyfillIfNeedBe = async () => {
   if (window.customElements) return;
-  return await import('@webcomponents/webcomponentsjs/webcomponents-sd-ce');
+  return await import(
+    '@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce'
+  );
 };
 
 const main = async () => {
