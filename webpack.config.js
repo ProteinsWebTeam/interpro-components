@@ -15,7 +15,7 @@ module.exports = (env = { production: false }) => ({
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: env.production ? 'index.js' : '[id].[name].[hash].js',
+    filename: env.production ? 'index.js' : '[id].[name].[fullhash].js',
   },
   resolve: {
     modules: [path.resolve('.', 'src'), path.resolve('.', 'node_modules')],
