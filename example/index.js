@@ -7,8 +7,8 @@ const getPolyfillIfNeedBe = async () => {
 
 const main = async () => {
   await getPolyfillIfNeedBe();
-  import('data-loader/src/index');
+  import('data-loader/dist/data-loader.js');
   import('index');
 };
 
-main().catch(error => console.error(error));
+main().catch((error) => console.error(error));

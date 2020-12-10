@@ -23,6 +23,7 @@ module.exports = {
     browser: true,
     es6: true,
   },
+  ignorePatterns: ['.eslintrc.js'],
   globals: {
     customElements: false,
   },
