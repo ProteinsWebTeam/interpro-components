@@ -35,7 +35,7 @@
   "scripts": {
     "bundle": "webpack",
     "prebuild": "npm run test",
-    "build": "npm run clean && npm run bundle -- --env.production",
+    "build": "npm run clean && npm run bundle -- --env production",
     "clean": "rimraf dist",
     "start": "webpack serve --mode=development",
     "test": "npm run test:unit && npm run test:lint",
