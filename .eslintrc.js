@@ -22,8 +22,9 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    mocha: true,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js', 'karma.conf.js'],
   globals: {
     customElements: false,
   },

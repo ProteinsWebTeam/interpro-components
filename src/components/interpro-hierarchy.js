@@ -21,7 +21,7 @@ class InterproHierarchy extends HTMLElement {
     node.pruned = true;
     let isCurrentNode = false;
     if (
-      this._accessions.find(e => e.toLowerCase() === accession.toLowerCase())
+      this._accessions.find((e) => e.toLowerCase() === accession.toLowerCase())
     ) {
       node.pruned = false;
       isCurrentNode = true;
@@ -35,7 +35,7 @@ class InterproHierarchy extends HTMLElement {
         !this._displaymode.includes('no-children') &&
         !node.pruned
       ) {
-        node.children.forEach(ch => (ch.pruned = false));
+        node.children.forEach((ch) => (ch.pruned = false));
       }
     }
     return node.pruned;
@@ -48,7 +48,7 @@ class InterproHierarchy extends HTMLElement {
       if (node.children) {
         // node._children = node.children.filter(ch => ch.pruned);
         n.children = [];
-        for (const child of node.children.filter(ch => !ch.pruned)) {
+        for (const child of node.children.filter((ch) => !ch.pruned)) {
           n.children.push(this._pruneTreePruning(child));
           // if (survivor) {
           //   // if (!n['children']) n['children'] = [];
@@ -77,8 +77,8 @@ class InterproHierarchy extends HTMLElement {
     if (!this._accession) return false;
     if (node.accession === this._accession) return true;
     if (!node.children) return false;
-    const branches = node.children.map(child =>
-      this._moveAccessionToTop(child),
+    const branches = node.children.map((child) =>
+      this._moveAccessionToTop(child)
     );
     const index = branches.indexOf(true);
     if (index > 0) {
@@ -113,8 +113,8 @@ class InterproHierarchy extends HTMLElement {
                     child,
                     i >= this._hideafter,
                     i + 1 === this._hideafter &&
-                      hierarchy.children.length > i + 1,
-                  ),
+                      hierarchy.children.length > i + 1
+                  )
                 )
                 .join('')
             : ''
@@ -132,12 +132,12 @@ class InterproHierarchy extends HTMLElement {
     let h = this._hierarchy;
     if (this._displaymode.includes('pruned')) {
       h = Array.isArray(h)
-        ? h.map(n => this._pruneTree(n))
+        ? h.map((n) => this._pruneTree(n))
         : this._pruneTree(this._hierarchy);
     }
     const shadowDom = this.shadyRoot || this.shadowRoot;
     shadowDom.innerHTML = Array.isArray(h)
-      ? h.map(n => this._json2HTML(n).trim()).join('')
+      ? h.map((n) => this._json2HTML(n).trim()).join('')
       : this._json2HTML(h).trim();
   }
 
