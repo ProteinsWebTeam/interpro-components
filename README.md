@@ -5,10 +5,9 @@ InterPro web components
 
 A standard web component (v1) implementation of InterPro components.
 
-Note: As the InterPro API is not released yet, the
-`interpro-data-loader` component is using a development version of the API, and
-for this reason it might unexpectedly break. The rest of visual components is
-still usable passing data to their attributes and/or properties.
+You can see a very basic demo [HERE](https://proteinswebteam.github.io/interpro-components/index.html).
+
+For more advanced components used in the interpro website, you can see the nightingale project: [ [Repo](https://github.com/ebi-webcomponents/nightingale) | [Website](https://ebi-webcomponents.github.io/nightingale) ]
 
 ## Usage
 

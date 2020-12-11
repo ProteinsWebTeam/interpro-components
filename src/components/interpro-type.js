@@ -1,6 +1,6 @@
 import { html, svg, render } from 'lit-html';
 
-const supportedTypes = new Map([
+export const supportedTypes = new Map([
   [
     'family',
     {
@@ -133,23 +133,21 @@ const typeTemplate = (
   small,
   full,
   fillColor,
-  textColor,
+  textColor
 ) => html`
   <style>
     .svg-container {
       display: inline-flex;
-      align-items:center;
-    }      
+      align-items: center;
+    }
   </style>
   <span class="svg-container">
     <svg viewBox="0 0 60 60" width="${dimension}" height="${dimension}">
       ${svgTemplate(fillColor, small)}
     </svg>
-    ${
-      expanded
-        ? html`<span style="color: ${textColor};">&nbsp;${full}</span>`
-        : ''
-    }
+    ${expanded
+      ? html`<span style="color: ${textColor};">&nbsp;${full}</span>`
+      : ''}
   </span>
 `;
 
@@ -182,9 +180,9 @@ class InterproType extends HTMLElement {
         this._type.small,
         this._type.full,
         this._type.colors[0],
-        this._type.colors[1],
+        this._type.colors[1]
       ),
-      this.shadyRoot || this.shadowRoot,
+      this.shadyRoot || this.shadowRoot
     );
   }
 
