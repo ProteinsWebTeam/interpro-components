@@ -49,11 +49,9 @@ module.exports = (env = { production: false }) => ({
   },
   plugins: [
     env.production ? null : new webpack.HotModuleReplacementPlugin(),
-    env.production
-      ? null
-      : new HtmlWebpackPlugin({
-          template: path.join(__dirname, 'example', 'index.template.html'),
-        }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'example', 'index.template.html'),
+    }),
   ].filter(Boolean),
   devtool: env.production ? 'source-map' : 'inline-source-map',
   devServer: env.production
