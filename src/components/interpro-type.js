@@ -133,7 +133,7 @@ const typeTemplate = (
   small,
   full,
   fillColor,
-  textColor
+  textColor,
 ) => html`
   <style>
     .svg-container {
@@ -146,7 +146,9 @@ const typeTemplate = (
       ${svgTemplate(fillColor, small)}
     </svg>
     ${expanded
-      ? html`<span style="color: ${textColor};">&nbsp;${full}</span>`
+      ? html`<span style="color: ${textColor}; padding-left: 0.5rem;"
+          >${full}</span
+        >`
       : ''}
   </span>
 `;
@@ -180,9 +182,9 @@ class InterproType extends HTMLElement {
         this._type.small,
         this._type.full,
         this._type.colors[0],
-        this._type.colors[1]
+        this._type.colors[1],
       ),
-      this.shadyRoot || this.shadowRoot
+      this.shadyRoot || this.shadowRoot,
     );
   }
 
