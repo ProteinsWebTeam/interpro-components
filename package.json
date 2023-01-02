@@ -60,7 +60,7 @@
     "@open-wc/testing-karma": "^4.0.9",
     "@webcomponents/webcomponentsjs": "2.5.0",
     "babel-eslint": "10.1.0",
-    "babel-loader": "8.2.2",
+    "babel-loader": "8.3.0",
     "data-loader": "3.0.0",
     "deepmerge": "^4.2.2",
     "eslint": "7.15.0",
